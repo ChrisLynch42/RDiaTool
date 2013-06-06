@@ -7,6 +7,7 @@ require 'r_dia_tool'
 require 'dia_parser'
 require 'reference_connection_point'
 require 'i_reference_parser'
+require 'column_parser'
 
 
 
