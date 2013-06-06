@@ -1,0 +1,1 @@
+require 'dia_parser'
