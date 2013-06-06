@@ -1,0 +1,4 @@
+--color
+--default_path spec
+--pattern **/*_spec.rb
+--format d

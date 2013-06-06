@@ -2,17 +2,14 @@ require 'dia_connection_point'
 
 module RDiaTool
   module Database
-    class DatabaseConnectionPoint
-      @translate_hash = Hash.new()
+    class ReferenceConnectionPoint < DiaConnectionPoint
       
       def initialize() 
-        13..100.each{ | val |
-          row = (val - 13)
-          if row > 0
-            row = row / 2
-          else
-            row = 1
-          end
+        @translate_hash = Hash.new()
+        (12..200).each{ | val |
+          evenVal = val - (val % 2)
+          row = (evenVal - 10)
+          row = row / 2
           @translate_hash[val]=row;
           @translate_hash[val.to_s]=row;
 
