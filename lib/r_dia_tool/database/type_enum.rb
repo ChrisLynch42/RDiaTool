@@ -1,6 +1,6 @@
 module RDiaTool
   module Database
-    module DatabaseTypeEnum
+    module TypeEnum
 
       TABLE="TABLE"
       REFERENCE="REFERENCE"

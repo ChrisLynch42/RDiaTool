@@ -12,7 +12,6 @@ module RDiaTool
         input_xml = <<-xml
           <?xml version="1.0" encoding="UTF-8"?>
             <dia:diagram xmlns:dia="http://www.lysator.liu.se/~alla/dia/">
-            <root>
               <dia:composite type="table_attribute">
                 <dia:attribute name="name">
                   <dia:string>#column_description#</dia:string>
@@ -33,12 +32,11 @@ module RDiaTool
                   <dia:boolean val="false"/>
                 </dia:attribute>
               </dia:composite>
-            </root>
           </dia:diagram>
         xml
 
         @xml_doc  = Nokogiri::XML(input_xml)
-        @xml_doc = @xml_doc.xpath('//root')
+        @xml_doc = @xml_doc.xpath('//dia:composite')
 
         @column_parser.parse(@xml_doc)        
       end
@@ -48,7 +46,7 @@ module RDiaTool
       end
 
       it "@column_parser should return 'varchar' when it receives the 'data_type' message" do
-        @column_parser.name.should == 'varchar'
+        @column_parser.data_type.should == 'varchar'
       end
 
       it "@column_parser should return 'xxx' when it receives the 'comment' message" do

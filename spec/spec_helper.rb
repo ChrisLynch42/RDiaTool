@@ -8,6 +8,10 @@ require 'dia_parser'
 require 'reference_connection_point'
 require 'i_reference_parser'
 require 'column_parser'
+require 'i_table_parser'
+require 'parser_factory'
+require 'parser_factory_spec_helper'
+require 'type_enum'
 
 
 
