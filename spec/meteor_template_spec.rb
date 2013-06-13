@@ -32,6 +32,16 @@ module RDiaTool
           @meteor_template.directories.include?('public').should be_true
         end
 
+        it "@meteor_template attribute templates should contain 'server/bootstrap.js'" do
+          @meteor_template.templates[0].target_directory.should == 'server'
+          @meteor_template.templates[0].source_file_name.should == 'bootstrap.js'
+        end
+
+        it "@meteor_template attribute templates should contain 'server/publish.js'" do
+          @meteor_template.templates[1].target_directory.should == 'server'
+          @meteor_template.templates[1].source_file_name.should == 'publish.js'
+        end
+
         it "@meteor_template should create directories 'client'" do
           @meteor_template.generate()
           Dir.exists?(@meteor_template.base_directory + '/client').should be_true
