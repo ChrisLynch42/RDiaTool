@@ -18,7 +18,7 @@ module RDiaTool
         end
 
         after(:each) do 
-          FileUtils.rm_rf(Dir.glob(@meteor_template + '/*'))
+          FileUtils.rm_rf(Dir.glob(@meteor_template.base_directory + '/*'))
         end
 
 
