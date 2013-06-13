@@ -3238,7 +3238,7 @@
             <dia:string>#templates#</dia:string>
           </dia:attribute>
           <dia:attribute name="type">
-            <dia:string>#Hash&lt;BasicTemplateFile&gt;#</dia:string>
+            <dia:string>#Array&lt;BasicTemplateFile&gt;#</dia:string>
           </dia:attribute>
           <dia:attribute name="value">
             <dia:string>##</dia:string>
