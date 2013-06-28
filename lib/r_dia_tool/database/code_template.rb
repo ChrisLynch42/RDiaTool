@@ -3,7 +3,7 @@ require 'i_basic_template'
 
 module RDiaTool
   module Database
-    class MeteorTemplate
+    class CodeTemplate
       include IBasicTemplate
 
       def initialize() 
