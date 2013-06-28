@@ -15,6 +15,7 @@ require 'type_enum'
 require 'basic_template_file'
 require 'i_basic_template'
 require 'code_template'
+require 'object_builder'
 
 
 
