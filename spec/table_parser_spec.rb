@@ -136,6 +136,14 @@ module RDiaTool
         @table_parser.parse(@xml_doc)        
       end
 
+      it "@table_parser.object_id should not return nil" do
+        @table_parser.object_id.should_not be_nil
+      end
+
+      it "@table_parser.object_id should be 'O0'" do
+        @table_parser.object_id.should == 'O0'
+      end
+
       it "@table_parser should return 'column_set' when it receives the 'name' message" do
         @table_parser.name.should == 'column_set'
       end

@@ -59,8 +59,7 @@ module RDiaTool
     protected
 
     def set_basics(target_node)
-      self.name = get_dia_string(target_node,'name')
-      self.uml_id = get_attribute(target_node,'id')
+      self.object_id = target_node.attr('id').value
     end
 
   end

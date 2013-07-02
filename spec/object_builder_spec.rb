@@ -15,22 +15,32 @@ module RDiaTool
           ObjectBuilder.instance_methods(false).include?(:references).should be_true
         end
 
-        it "ObjectBuilder should have attribute 'initialize' defined" do
-          ObjectBuilder.instance_methods(false).include?(:initialize).should be_true
-        end
-
-        it "ObjectBuilder should have attribute 'parse' defined" do
-          ObjectBuilder.instance_methods(false).include?(:parse).should be_true
-        end
       end
 
       describe "Check Instance of class" do
         before(:each) do 
-#          @builder = new ObjectBuilder()
+          @builder = ObjectBuilder.new(loadTestXML())
         end
 
+        it "ObjectBuilder.tables should not be nil" do
+          @builder.tables.should_not be_nil
+        end
 
+        it "ObjectBuilder.references should not be nil" do
+          @builder.references.should_not be_nil
+        end
 
+        it "ObjectBuilder.tables should be a Hash" do
+          @builder.tables.class.name.should == "Hash"
+        end
+
+        it "ObjectBuilder.references should be a Hash" do
+          @builder.references.class.name.should == "Hash"
+        end
+
+        it "ObjectBuilder.tables.size should be 2" do
+          @builder.tables.size.should == 2
+        end
 
       end
     end

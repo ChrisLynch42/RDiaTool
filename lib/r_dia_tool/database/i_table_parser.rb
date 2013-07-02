@@ -18,6 +18,7 @@ module RDiaTool
           super(target_node)
         end
         set_up()
+        set_basics(target_node)
         self.name = get_dia_string(target_node,'name')
         columns_node = target_node.xpath("./dia:attribute[@name='attributes']/dia:composite[@type='table_attribute']")
         if !columns_node.nil?

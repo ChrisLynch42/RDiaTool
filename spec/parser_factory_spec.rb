@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe "Database Parser Factory" do
 
-  databaseParserFactory = ParserFactory.new()
+  databaseParserFactory = RDiaTool::Database::ParserFactory.new()
 
 
 
