@@ -23,7 +23,7 @@ module RDiaTool
       def parse_tables(document)
         table_nodes =document.xpath("//dia:object[@type='Database - Table']")
         puts 'uyyyyyyyyyyyyyyy'
-        puts table_nodes
+        #puts table_nodes
         if !table_nodes.nil?
           parser_factory = ParserFactory.new()        
           table_nodes.each do | table_node |

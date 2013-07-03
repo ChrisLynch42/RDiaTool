@@ -26,7 +26,7 @@ module RDiaTool
 
       end
 
-
+      public
       def parser(parser_type)
         return_value=nil
         if !self.parser_types[parser_type].nil?
@@ -34,7 +34,7 @@ module RDiaTool
           add_modules(parser_type,return_value)
         end
 
-        return_value 
+        return_value
       end
 
       private
@@ -42,10 +42,12 @@ module RDiaTool
         if !self.parser_types[parser_type].nil?
           self.parser_types[parser_type].each { | module_type |
             if !self.parser_parts[module_type].nil?
-              #puts "constants=" + DatabaseParserFactory.constants(true).to_s
+              puts "module name=" + self.parser_parts[module_type]
               parser_object.send(:include, ParserFactory.const_get(self.parser_parts[module_type]))
             end
-          }      
+          }
+          puts "parser_object.superclass=" + parser_object.superclass.to_s
+          puts "parser_object.ancestors=" + parser_object.ancestors.to_s
         end
       end
 

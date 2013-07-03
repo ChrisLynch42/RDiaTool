@@ -10,6 +10,15 @@ module RDiaTool
 
     describe "ITableParser" do
 
+    describe "Class" do
+        it "ITableParser should have method 'parse' defined" do
+          ITableParser.instance_methods(false).include?(:parse).should be_true
+        end
+
+    end
+
+
+    describe "Instance of class" do
       before(:each) do 
         @table_parser = TestTableParser.new()
 
@@ -164,7 +173,7 @@ module RDiaTool
         @table_parser.columns['set_id'].name.should == 'set_id'
       end
 
-
+    end
     end
   end
 end
