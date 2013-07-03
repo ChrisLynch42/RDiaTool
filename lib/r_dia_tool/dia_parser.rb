@@ -59,7 +59,7 @@ module RDiaTool
     protected
 
     def set_basics(target_node)
-      self.object_id = target_node.attr('id').value
+      self.object_id = target_node.attr('id').to_s
     end
 
   end

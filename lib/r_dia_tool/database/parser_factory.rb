@@ -42,12 +42,9 @@ module RDiaTool
         if !self.parser_types[parser_type].nil?
           self.parser_types[parser_type].each { | module_type |
             if !self.parser_parts[module_type].nil?
-              puts "module name=" + self.parser_parts[module_type]
               parser_object.send(:include, ParserFactory.const_get(self.parser_parts[module_type]))
             end
           }
-          puts "parser_object.superclass=" + parser_object.superclass.to_s
-          puts "parser_object.ancestors=" + parser_object.ancestors.to_s
         end
       end
 
