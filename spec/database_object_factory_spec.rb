@@ -22,26 +22,55 @@ module RDiaTool
         it "ObjectBuilder.tables_by_name should not be nil" do
           @database_object.tables_by_name.should_not be_nil
         end
+        
+        it "ObjectBuilder.tables_by_id should not be nil" do
+          @database_object.tables_by_id.should_not be_nil
+        end
+
 
         it "ObjectBuilder.references_by_origin should not be nil" do
           @database_object.references_by_origin.should_not be_nil
+        end
+
+        it "ObjectBuilder.references_by_target should not be nil" do
+          @database_object.references_by_target.should_not be_nil
         end
 
         it "ObjectBuilder.tables_by_name should be a Hash" do
           @database_object.tables_by_name.class.name.should == "Hash"
         end
 
+        it "ObjectBuilder.tables_by_id should be a Hash" do
+          @database_object.tables_by_id.class.name.should == "Hash"
+        end
+
+
         it "ObjectBuilder.references_by_origin should be a Hash" do
           @database_object.references_by_origin.class.name.should == "Hash"
         end
+
+        it "ObjectBuilder.references_by_target should be a Hash" do
+          @database_object.references_by_target.class.name.should == "Hash"
+        end
+        
 
         it "ObjectBuilder.tables_by_name.size should be 2" do
           @database_object.tables_by_name.size.should == 2
         end
 
+        it "ObjectBuilder.tables_by_id.size should be 2" do
+          @database_object.tables_by_id.size.should == 2
+        end
+
+
         it "ObjectBuilder.references_by_origin.size should be 2" do
           @database_object.references_by_origin.size.should == 1
         end
+
+        it "ObjectBuilder.references_by_target.size should be 2" do
+          @database_object.references_by_target.size.should == 1
+        end
+        
 
 
       end
