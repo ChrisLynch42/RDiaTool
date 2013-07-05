@@ -9,7 +9,7 @@ require 'type_enum'
 
 module RDiaTool
   module Database
-    class ParserFactory
+    class ParserClassFactory
       include RDiaTool::Database::TypeEnum
       include RDiaTool::Database
 
@@ -42,7 +42,7 @@ module RDiaTool
         if !self.parser_types[parser_type].nil?
           self.parser_types[parser_type].each { | module_type |
             if !self.parser_parts[module_type].nil?
-              parser_object.send(:include, ParserFactory.const_get(self.parser_parts[module_type]))
+              parser_object.send(:include, ParserClassFactory.const_get(self.parser_parts[module_type]))
             end
           }
         end

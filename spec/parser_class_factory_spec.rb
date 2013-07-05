@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 
-describe "Database Parser Factory" do
+describe RDiaTool::Database::ParserClassFactory do
 
-  databaseParserFactory = RDiaTool::Database::ParserFactory.new()
+  databaseParserFactory = RDiaTool::Database::ParserClassFactory.new()
 
 
 
