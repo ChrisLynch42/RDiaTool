@@ -19,6 +19,7 @@ require 'database_object'
 require 'database_object_factory'
 require 'template_controller'
 require 'rails_model_template'
+require 'database_difference'
 
 
 
@@ -31,4 +32,6 @@ def loadTestXML
   f.close()
   doc
 end
+
+
 

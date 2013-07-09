@@ -76,24 +76,24 @@ module RDiaTool
 
         describe "DatabaseDifference Instance" do
 
+          @template_controller.analyze()
+
           it "should have a parent @template_controller that is not nil" do
             @template_controller.should_not be_nil
           end
 
+
           it "should not return nil receives the 'change' message" do
-            @template_controller.analyze()
             @template_controller.database_difference.change.should_not be_nil
           end
 
           it "should return a hash when it receives the 'change' message" do
-            @template_controller.analyze()
             @template_controller.database_difference.change.class.to_s.should == 'Hash'
           end
 
-          describe "@template_controller.database_difference.change" do
+          describe "@database_difference.change" do
             it "should a size of 2" do
-              @template_controller.analyze()
-              @template_controller.database_difference.change.length.should == 2
+             @template_controller.database_difference.change.length.should == 2
             end              
           end
 
