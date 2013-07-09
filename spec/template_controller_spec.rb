@@ -11,6 +11,11 @@ module RDiaTool
           TemplateController.instance_methods(false).include?(:template).should be_true
         end
 
+        it "TemplateController should have attribute 'template_instance' defined" do
+          TemplateController.instance_methods(false).include?(:template_instance).should be_true
+        end
+
+
         it "TemplateController should have attribute 'dia_xml_file' defined" do
           TemplateController.instance_methods(false).include?(:dia_xml_file).should be_true
         end
@@ -38,6 +43,11 @@ module RDiaTool
           @template_controller.connect()
           @template_controller.database_connected?().should be_true
         end
+
+        it "it should return true when it receives the 'instantiate_template' message" do
+          @template_controller.instantiate_template().should be_true
+        end
+        
         
       end
     end
