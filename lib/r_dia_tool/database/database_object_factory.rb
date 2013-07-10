@@ -25,13 +25,13 @@ module RDiaTool
 
       def table
         table_class = Class.new()
-        table_class.include(ITable)
+        table_class.send(:include,ITable)
         table_object = table_class.new()
       end
 
       def column
         column_class = Class.new()
-        column_class.include(IColumn)
+        column_class.send(:include, IColumn)
         column_object = column_class.new()
       end
 
