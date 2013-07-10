@@ -94,7 +94,19 @@ module RDiaTool
             it "should a size of 2" do
               @template_controller.analyze()
               @template_controller.database_difference.change.length.should == 2
-            end              
+            end
+            it "should contain a key of 'column_set'" do
+              @template_controller.analyze()
+              @template_controller.database_difference.change.include?('column_set').should be_true
+            end
+            describe "@template_controller.database_difference.change['column_set']" do
+              it "should not be nil" do
+                @template_controller.analyze()
+                @template_controller.database_difference.change['column_set'].should_not be_nil
+              end
+            end
+            
+
           end
 
         end
