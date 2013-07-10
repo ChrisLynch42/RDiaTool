@@ -1,12 +1,11 @@
 require 'nokogiri'
 require 'dia_parser'
+require 'i_column'
 
 module RDiaTool
   module Database
     class ColumnParser < DiaParser
-
-      attr_accessor :name, :data_type, :primary_key, :nullable, :unique, :comment
-
+      include IColumn
 
       def parse(target_node)
         if defined? super

@@ -10,6 +10,12 @@ module RDiaTool
         it "should have method 'database' defined" do
           DatabaseObjectFactory.instance_methods(false).include?(:database).should be_true
         end
+        it "should have method 'table' defined" do
+          DatabaseObjectFactory.instance_methods(false).include?(:table).should be_true
+        end
+        it "should have method 'column' defined" do
+          DatabaseObjectFactory.instance_methods(false).include?(:column).should be_true
+        end
 
       end
 

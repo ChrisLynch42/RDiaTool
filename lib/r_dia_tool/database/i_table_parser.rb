@@ -1,12 +1,12 @@
 require 'nokogiri'
 require 'dia_parser'
 require 'column_parser'
+require 'i_table'
 
 module RDiaTool
   module Database
     module ITableParser
-
-      attr_accessor :name, :columns
+      include ITable
 
       def set_up() 
         self.columns = Hash.new()

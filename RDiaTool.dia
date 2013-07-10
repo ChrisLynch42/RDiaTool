@@ -2688,20 +2688,22 @@
     </dia:object>
     <dia:object type="UML - Dependency" version="1" id="O14">
       <dia:attribute name="obj_pos">
-        <dia:point val="-26.3728,5.26631"/>
+        <dia:point val="-27.0411,-12.6483"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="-31.8449,1.941;-26.3228,5.31631"/>
+        <dia:rectangle val="-31.8449,-12.6983;-26.9911,3.141"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="orth_points">
-        <dia:point val="-26.3728,5.26631"/>
-        <dia:point val="-26.3728,2.691"/>
+        <dia:point val="-27.0411,-12.6483"/>
+        <dia:point val="-29.018,-12.6483"/>
+        <dia:point val="-29.018,2.691"/>
         <dia:point val="-31.3949,2.691"/>
       </dia:attribute>
       <dia:attribute name="orth_orient">
+        <dia:enum val="0"/>
         <dia:enum val="1"/>
         <dia:enum val="0"/>
       </dia:attribute>
@@ -2724,7 +2726,7 @@
         <dia:boolean val="true"/>
       </dia:attribute>
       <dia:connections>
-        <dia:connection handle="0" to="O10" connection="10"/>
+        <dia:connection handle="0" to="O40" connection="3"/>
         <dia:connection handle="1" to="O13" connection="4"/>
       </dia:connections>
       <dia:childnode parent="O0"/>
@@ -5901,7 +5903,7 @@
         <dia:point val="-26.3728,5.26631"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="-27.4911,-10.2733;-26.3228,5.31631"/>
+        <dia:rectangle val="-26.4229,-10.2733;-24.1536,5.31631"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
@@ -5909,8 +5911,8 @@
       <dia:attribute name="orth_points">
         <dia:point val="-26.3728,5.26631"/>
         <dia:point val="-26.3728,-2.0785"/>
-        <dia:point val="-27.0411,-2.0785"/>
-        <dia:point val="-27.0411,-9.8233"/>
+        <dia:point val="-24.6036,-2.0785"/>
+        <dia:point val="-24.6036,-9.8233"/>
       </dia:attribute>
       <dia:attribute name="orth_orient">
         <dia:enum val="1"/>
@@ -5937,7 +5939,7 @@
       </dia:attribute>
       <dia:connections>
         <dia:connection handle="0" to="O10" connection="10"/>
-        <dia:connection handle="1" to="O40" connection="5"/>
+        <dia:connection handle="1" to="O40" connection="6"/>
       </dia:connections>
       <dia:childnode parent="O1"/>
     </dia:object>

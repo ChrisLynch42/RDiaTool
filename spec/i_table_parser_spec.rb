@@ -8,9 +8,9 @@ module RDiaTool
       include ITableParser
     end
 
-    describe "ITableParser" do
+    describe ITableParser do
 
-    describe "Class" do
+    describe "Module" do
         it "ITableParser should have method 'parse' defined" do
           ITableParser.instance_methods(false).include?(:parse).should be_true
         end
@@ -18,7 +18,7 @@ module RDiaTool
     end
 
 
-    describe "Instance of class" do
+    describe "Instance" do
       before(:each) do 
         @table_parser = TestTableParser.new()
 

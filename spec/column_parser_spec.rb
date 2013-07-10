@@ -4,12 +4,21 @@ require 'nokogiri'
 module RDiaTool
   module Database
 
-    describe "ColumnParser" do
+    describe ColumnParser do
 
-      before(:each) do 
-        @column_parser = ColumnParser.new()
+      describe "Class" do
+        it "should have a method named 'parse'" do
+          ColumnParser.instance_methods(false).include?(:parse).should be_true
+        end
 
-        input_xml = <<-xml
+      end
+
+      describe "Instance" do
+
+        before(:each) do 
+          @column_parser = ColumnParser.new()
+
+          input_xml = <<-xml
           <?xml version="1.0" encoding="UTF-8"?>
             <dia:diagram xmlns:dia="http://www.lysator.liu.se/~alla/dia/">
               <dia:composite type="table_attribute">
@@ -33,38 +42,38 @@ module RDiaTool
                 </dia:attribute>
               </dia:composite>
           </dia:diagram>
-        xml
+          xml
 
-        @xml_doc  = Nokogiri::XML(input_xml)
-        @xml_doc = @xml_doc.xpath('//dia:composite')
+          @xml_doc  = Nokogiri::XML(input_xml)
+          @xml_doc = @xml_doc.xpath('//dia:composite')
 
-        @column_parser.parse(@xml_doc)        
+          @column_parser.parse(@xml_doc)        
+        end
+
+        it "@column_parser should return 'column_description' when it receives the 'name' message" do
+          @column_parser.name.should == 'column_description'
+        end
+
+        it "@column_parser should return 'varchar' when it receives the 'data_type' message" do
+          @column_parser.data_type.should == 'varchar'
+        end
+
+        it "@column_parser should return 'xxx' when it receives the 'comment' message" do
+          @column_parser.comment.should == 'xxx'
+        end
+
+        it "@column_parser should return true when it receives the 'nullable' message" do
+          @column_parser.nullable.should == true
+        end
+
+        it "@column_parser should return false when it receives the 'unique' message" do
+          @column_parser.unique.should == false
+        end
+
+        it "@column_parser should return false when it receives the 'primary_key' message" do
+          @column_parser.primary_key.should == false
+        end
       end
-
-      it "@column_parser should return 'column_description' when it receives the 'name' message" do
-        @column_parser.name.should == 'column_description'
-      end
-
-      it "@column_parser should return 'varchar' when it receives the 'data_type' message" do
-        @column_parser.data_type.should == 'varchar'
-      end
-
-      it "@column_parser should return 'xxx' when it receives the 'comment' message" do
-        @column_parser.comment.should == 'xxx'
-      end
-
-      it "@column_parser should return true when it receives the 'nullable' message" do
-        @column_parser.nullable.should == true
-      end
-
-      it "@column_parser should return false when it receives the 'unique' message" do
-        @column_parser.unique.should == false
-      end
-
-      it "@column_parser should return false when it receives the 'primary_key' message" do
-        @column_parser.primary_key.should == false
-      end
-
 
     end
   end
