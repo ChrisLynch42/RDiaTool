@@ -22,6 +22,7 @@ require 'database_object_factory'
 require 'template_controller'
 require 'rails_model_template'
 require 'database_difference'
+require 'database_change'
 
 
 

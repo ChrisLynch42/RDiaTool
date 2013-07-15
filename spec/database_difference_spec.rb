@@ -2,7 +2,6 @@ require 'spec_helper'
 
 module RDiaTool
   module Database
-    shared_examples_for "DatabaseDifference" do | test_parser |
       describe DatabaseDifference do
 
         describe "Check Class" do
@@ -17,7 +16,6 @@ module RDiaTool
         end
 
 
-      end
     end
   end
 end
