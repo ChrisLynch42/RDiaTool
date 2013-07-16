@@ -108,9 +108,9 @@ module RDiaTool
                 @template_controller.analyze()
                 @template_controller.database_difference.change['column_set'].class.eql?(DatabaseChange).should be_true
               end
-              it "should be return 3 when it recieves the 'add().length' message" do
+              it "should be return 2 when it recieves the 'add().length' message" do
                 @template_controller.analyze()
-                @template_controller.database_difference.change['column_set'].add().length.should == 3
+                @template_controller.database_difference.change['column_set'].add().length.should == 2
               end
             end
             

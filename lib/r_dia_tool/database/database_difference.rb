@@ -23,21 +23,32 @@ module RDiaTool
         end
 
         def compare_tables(database_object_tables,database_tables)
-          puts database_tables
           database_object_tables.each { | table_name, table_object |
-            unless database_tables.include?(table_name)
-              #puts ActiveRecord::Base.connection.columns(table_name)
+            if database_tables.include?(table_name)
+              # compare_columns(database_object_tables[table_name],table_name)
+              puts 'check'
+              puts ActiveRecord::Base.connection.columns(table_name).nil?
+            else
               @change[table_name]=DatabaseChange.new()
-              compare_columns(database_object_tables[table_name],table_name)
+              @change[table_name].add=database_object_tables[table_name].columns
             end
           }
         end
 
         def compare_columns(table_object,table_name)
+          
           table_object.columns().each { | column_name, column|
+            puts 'xxx'
             
           }
-        end        
+        end
+
+        def add_column(database_change, column_object)
+          puts 'add_column'
+          unless database_change.nil?            
+
+          end
+        end
     end
   end
 end
