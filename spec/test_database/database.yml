@@ -1,2 +1,2 @@
   adapter: sqlite3
-  database: ../../../spec/test_database/development.sqlite3
+  database: ../../../spec/temp_database/development.sqlite3

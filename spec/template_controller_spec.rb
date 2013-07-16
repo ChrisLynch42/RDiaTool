@@ -30,13 +30,26 @@ module RDiaTool
       end
 
       describe "Instance" do
-
+       
         before(:each) do
           dia_xml=loadTestXML()
-          database_file=File.dirname(__FILE__) + '/test_database/development.sqlite3' 
+          base_dir=File.dirname(__FILE__)
+          temp_database=base_dir + "/temp_database"
+          unless FileTest::directory?(temp_database)
+            Dir::mkdir(temp_database)
+          end
+          file_name='development.sqlite3'
+          database_file= base_dir + '/test_database/' + file_name
+          FileUtils.cp(database_file,temp_database)
+          database_file= temp_database + '/' + file_name
           database_config= { 'adapter' => 'sqlite3', 'database' => database_file}
           @template_controller = RDiaTool::Database::TemplateController.new(dia_xml,'RailsModel',database_config)
+        end
 
+        after(:each) do
+          base_dir=File.dirname(__FILE__)
+          temp_database=base_dir + "/temp_database"
+          FileUtils.rm_rf(temp_database)
         end
 
         it "it should return false when it receives the 'database_connected?' message" do
