@@ -5,14 +5,17 @@ module RDiaTool
 
     describe RailsModelTemplate do
 
-      describe "Check Class" do
-        it "BasicTemplate should have attribute 'generate' defined" do
+      describe "Class" do
+        it "should have attribute 'generate' defined" do
           RailsModelTemplate.instance_methods(false).include?(:generate).should be_true
         end
 
+        it "should have attribute 'database_difference' defined" do
+          RailsModelTemplate.instance_methods(false).include?(:database_difference).should be_true
+        end        
       end
 
-      describe "Check Instance of class" do
+      describe "Instance" do
         before(:each) do 
         end
 
