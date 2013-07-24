@@ -35,10 +35,17 @@ module RDiaTool
       end
 
       def instantiate_template
+        analyze()
         class_string = "RDiaTool::Database::"+ template + "Template"
         class_constant = class_string.constantize
-        @template_instance = class_constant.new()
+        @template_instance = class_constant.new(@database_difference)
         !@template_instance.nil?
+      end
+
+      def execute_template()
+        if instantiate_template()
+          @template_instance.generate()
+        end
       end
 
 
