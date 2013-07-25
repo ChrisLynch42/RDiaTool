@@ -126,7 +126,21 @@ module RDiaTool
                 @template_controller.database_difference.change['column_set'].add().length.should == 2
               end
             end
-            
+            describe "@template_controller.run_template()" do
+              before(:each) do
+                @template_controller.execute_template()
+                base_dir=File.dirname(__FILE__)
+                @template_dir=base_dir + "/template_test"
+              end
+
+              after(:each) do
+                FileUtils.rm_rf(Dir.glob(@template_dir + '/*'))
+              end              
+              it "should create 'column_set.sh' file" do
+                File.exists?(@template_dir + "/column_set.sh")
+              end
+
+            end 
 
           end
 
