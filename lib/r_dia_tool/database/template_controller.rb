@@ -6,11 +6,12 @@ module RDiaTool
   module Database
 
     class TemplateController
-      attr_reader :template, :dia_xml, :database_configuration, :template_instance, :database_difference
+      attr_reader :template, :dia_xml, :database_configuration, :template_instance, :database_difference, :target_directory
 
-      def initialize(dia_xml,template,database_configuration)
+      def initialize(dia_xml,template,target_directory,database_configuration)
         @template=template
         @dia_xml=dia_xml
+        @target_directory=target_directory
         @database_configuration=database_configuration
         unless database_configuration.nil? || database_configuration.kind_of?(Hash)
           raise Exception.new("database configuration is not a hash")
@@ -38,7 +39,7 @@ module RDiaTool
         analyze()
         class_string = "RDiaTool::Database::"+ template + "Template"
         class_constant = class_string.constantize
-        @template_instance = class_constant.new(@database_difference)
+        @template_instance = class_constant.new(@database_difference,@target_directory)
         !@template_instance.nil?
       end
 

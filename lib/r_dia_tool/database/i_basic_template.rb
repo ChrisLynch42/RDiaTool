@@ -6,6 +6,8 @@ module RDiaTool
 
       attr_accessor :base_directory, :directories, :templates
 
+      
+
       def generate()
 
       end

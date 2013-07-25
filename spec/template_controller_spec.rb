@@ -27,6 +27,10 @@ module RDiaTool
           TemplateController.instance_methods(false).include?(:database_difference).should be_true
         end
 
+        it "TemplateController should have attribute 'target_directory' defined" do
+          TemplateController.instance_methods(false).include?(:target_directory).should be_true
+        end
+
       end
 
       describe "Instance" do
@@ -34,22 +38,21 @@ module RDiaTool
         before(:each) do
           dia_xml=loadTestXML()
           base_dir=File.dirname(__FILE__)
-          temp_database=base_dir + "/temp_database"
-          unless FileTest::directory?(temp_database)
-            Dir::mkdir(temp_database)
+          @temp_database=base_dir + "/temp_database"
+          @template_dir=base_dir + "/template_test"
+          unless FileTest::directory?(@temp_database)
+            Dir::mkdir(@temp_database)
           end
           file_name='development.sqlite3'
           database_file= base_dir + '/test_database/' + file_name
-          FileUtils.cp(database_file,temp_database)
-          database_file= temp_database + '/' + file_name
+          FileUtils.cp(database_file,@temp_database)
+          database_file= @temp_database + '/' + file_name
           database_config= { 'adapter' => 'sqlite3', 'database' => database_file}
-          @template_controller = RDiaTool::Database::TemplateController.new(dia_xml,'RailsModel',database_config)
+          @template_controller = RDiaTool::Database::TemplateController.new(dia_xml,'RailsModel',@template_dir,database_config)
         end
 
         after(:each) do
-          base_dir=File.dirname(__FILE__)
-          temp_database=base_dir + "/temp_database"
-          FileUtils.rm_rf(temp_database)
+          FileUtils.rm_rf(@temp_database)
         end
 
         it "it should return false when it receives the 'database_connected?' message" do
@@ -129,8 +132,6 @@ module RDiaTool
             describe "@template_controller.run_template()" do
               before(:each) do
                 @template_controller.execute_template()
-                base_dir=File.dirname(__FILE__)
-                @template_dir=base_dir + "/template_test"
               end
 
               after(:each) do
