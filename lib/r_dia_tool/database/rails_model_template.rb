@@ -9,7 +9,7 @@ module RDiaTool
         changes.each { | table_name, table_changes |
           unless table_changes.nil?
             unless table_changes.add().nil?             
-              run_erb('command_line.erb',table_name + '.sh')
+              run_erb('command_line_model.erb',table_name + '.sh')
             end
             #implement calling ERB Template
           end
@@ -19,7 +19,7 @@ module RDiaTool
       def initialize(database_difference,target_directory)        
         @database_difference=database_difference
         @target_directory=target_directory
-        @base_directory = base_dir=File.dirname(__FILE__) + "/templates/RailsModel"
+        @base_directory = base_dir=File.dirname(__FILE__) + "/RailsModel"
         if @database_difference.nil?
           raise "@database_difference is nil"
         elsif @database_difference.class.name == 'RDiaTool\:\:Database\:\:DatabaseDifference'
@@ -33,20 +33,25 @@ module RDiaTool
       private
 
         def run_erb(template_name,target_name)
-          template = ERB.new load_template(@base_directory + '/' + template_name)
+          template_content = load_template(@base_directory + '/' + template_name)
+          template = ERB.new(template_content)
           template_results = template.result()
-          write_template_results(@target_directory + '/' + file_name,template_results)         
+          write_template_results(@target_directory + '/' + target_name,template_results)         
         end
 
         def load_template(template_name)
           if File.exists?(template_name)
-            File.open(template_name)
-            contents=File.read()
+            file = File.open(template_name)
+            contents=file.read()
           end
         end
 
         def write_template_results(file_name,template_results)
-          File.open(file_name) { |file|
+          puts 'file'
+          puts file_name
+          File.open(file_name,'w') { |file|
+            puts 'write'
+            puts template_results
             file.write(template_results)
           }
         end        
