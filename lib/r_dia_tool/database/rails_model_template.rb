@@ -47,11 +47,7 @@ module RDiaTool
         end
 
         def write_template_results(file_name,template_results)
-          puts 'file'
-          puts file_name
           File.open(file_name,'w') { |file|
-            puts 'write'
-            puts template_results
             file.write(template_results)
           }
         end        
