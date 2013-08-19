@@ -8,8 +8,12 @@ module RDiaTool
         changes = @database_difference.change()
         changes.each { | table_name, table_changes |
           unless table_changes.nil?
-            unless table_changes.add().nil?             
-              run_erb('command_line_model.erb',table_name + '.sh')
+            unless table_changes.add().nil?
+              Dir.glob(@base_directory + "/*.erb").each { | file_name |
+                puts 'in the glob'
+                puts file_name
+                run_erb(file_name,table_name + '.sh')
+              }
             end
             #implement calling ERB Template
           end
@@ -33,7 +37,7 @@ module RDiaTool
       private
 
         def run_erb(template_name,target_name)
-          template_content = load_template(@base_directory + '/' + template_name)
+          template_content = load_template(template_name)
           template = ERB.new(template_content)
           template_results = template.result()
           write_template_results(@target_directory + '/' + target_name,template_results)         
