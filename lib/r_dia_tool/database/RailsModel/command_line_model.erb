@@ -1,1 +1,16 @@
 xxxx
+
+<% 
+  @database_difference.change().each { | table_name, table_change | 
+    _erbout << 'rails generate model '
+    _erbout << table_name
+    table_change.add().each { | key, value|
+      _erbout << ' '
+      _erbout << key
+      _erbout << ':'
+      _erbout << value.data_type
+
+    }
+    _erbout << "\n"
+  } 
+%>

@@ -39,7 +39,7 @@ module RDiaTool
         def run_erb(template_name,target_name)
           template_content = load_template(template_name)
           template = ERB.new(template_content)
-          template_results = template.result()
+          template_results = template.result(binding)
           write_template_results(@target_directory + '/' + target_name,template_results)         
         end
 
