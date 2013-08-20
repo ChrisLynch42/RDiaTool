@@ -6,18 +6,13 @@ module RDiaTool
 
       def generate
         creations = @database_difference.create()
-        creations.each { | table_name, table_create |
-          unless table_create.nil?
-            unless table_create.add().nil?
-              Dir.glob(@base_directory + "/*create.erb").each { | file_name |
-                puts 'in the glob'
-                puts file_name
-                run_erb(file_name,table_name + '_create.sh')
-              }
-            end
-            #implement calling ERB Template
-          end
-        }
+        unless creations.nil? || creations.length <  1
+          Dir.glob(@base_directory + "/*create.erb").each { | file_name |
+            current_date = Time.now().strftime("%Y%m%d%H")
+            run_erb(file_name,'tables_create_' + current_date + '.sh')
+          }
+          #implement calling ERB Template
+        end
       end
 
       def initialize(database_difference,target_directory)        
@@ -36,25 +31,25 @@ module RDiaTool
 
       private
 
-        def run_erb(template_name,target_name)
-          template_content = load_template(template_name)
-          template = ERB.new(template_content)
-          template_results = template.result(binding)
-          write_template_results(@target_directory + '/' + target_name,template_results)         
-        end
+      def run_erb(template_name,target_name)
+        template_content = load_template(template_name)
+        template = ERB.new(template_content)
+        template_results = template.result(binding)
+        write_template_results(@target_directory + '/' + target_name,template_results)         
+      end
 
-        def load_template(template_name)
-          if File.exists?(template_name)
-            file = File.open(template_name)
-            contents=file.read()
-          end
+      def load_template(template_name)
+        if File.exists?(template_name)
+          file = File.open(template_name)
+          contents=file.read()
         end
+      end
 
-        def write_template_results(file_name,template_results)
-          File.open(file_name,'w') { |file|
-            file.write(template_results)
-          }
-        end        
+      def write_template_results(file_name,template_results)
+        File.open(file_name,'w') { |file|
+          file.write(template_results)
+        }
+      end        
 
     end
   end

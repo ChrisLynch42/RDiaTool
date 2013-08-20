@@ -145,10 +145,10 @@ module RDiaTool
               end
 
               after(:each) do
-                #FileUtils.rm_rf(Dir.glob(@template_dir + '/*'))
+                FileUtils.rm_rf(Dir.glob(@template_dir + '/*'))
               end              
-              it "should create 'column_set.sh' file" do
-                File.exists?(@template_dir + "/column_set_create.sh").should be_true
+              it "should create 'table_create*.sh' file" do
+                Dir.glob(@template_dir + "/tables_create*.sh").empty?().should be_false
               end
 
             end 
