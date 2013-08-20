@@ -1,5 +1,5 @@
 <% 
-  @database_difference.change().each { | table_name, table_change | 
+  @database_difference.create().each { | table_name, table_change | 
     _erbout << 'rails generate model '
     _erbout << table_name
     table_change.add().each { | key, value|

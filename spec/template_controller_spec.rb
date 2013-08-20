@@ -148,7 +148,7 @@ module RDiaTool
                 #FileUtils.rm_rf(Dir.glob(@template_dir + '/*'))
               end              
               it "should create 'column_set.sh' file" do
-                File.exists?(@template_dir + "/column_set.sh").should be_true
+                File.exists?(@template_dir + "/column_set_create.sh").should be_true
               end
 
             end 

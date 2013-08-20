@@ -9,10 +9,10 @@ module RDiaTool
         creations.each { | table_name, table_create |
           unless table_create.nil?
             unless table_create.add().nil?
-              Dir.glob(@base_directory + "/*.erb").each { | file_name |
+              Dir.glob(@base_directory + "/*create.erb").each { | file_name |
                 puts 'in the glob'
                 puts file_name
-                run_erb(file_name,table_name + '.sh')
+                run_erb(file_name,table_name + '_create.sh')
               }
             end
             #implement calling ERB Template
