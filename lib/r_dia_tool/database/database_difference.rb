@@ -20,27 +20,44 @@ module RDiaTool
       private
         def compare_database_object_to_database
           database_tables = ActiveRecord::Base.connection.tables
-          compare_tables(@database.tables_by_name,database_tables)
+          compare_tables(database_tables)
         end
 
-        def compare_tables(database_object_tables,database_tables)
-          database_object_tables.each { | table_name, table_object |
+        def compare_tables(database_tables)
+          @database.tables_by_name.each { | table_name, table_object |
             if database_tables.include?(table_name)
-              # compare_columns(database_object_tables[table_name],table_name)
               puts 'check'
-              puts ActiveRecord::Base.connection.columns(table_name).nil?
+              puts table_name
+              @change[table_name]=DatabaseChange.new()
+              compare_columns(table_object,table_name)
+
             else
               @create[table_name]=DatabaseChange.new()
-              @create[table_name].add=database_object_tables[table_name].columns
+              @create[table_name].add=table_object.columns
             end
           }
         end
 
-        def compare_columns(table_object,table_name)
-          
-          table_object.columns().each { | column_name, column|
-            puts 'xxx'
-            
+        def compare_columns(table_design, table_name)
+          database_table_columns = ActiveRecord::Base.connection.columns(table_name)
+          database_table_columns.each { | column|
+            print column.type
+            puts column.name
+            if table_design.columns.include?(column.name)
+              if column.type.upcase() == table_design.columns[column.name].data_type.upcase()
+                puts 'do nothing'
+              else
+                puts table_design.columns[column.name].data_type
+                puts 'change column ' + column.name
+              end
+            else
+              puts 'remove column ' + column.name
+            end            
+          }
+          table_design.columns.each { | column_name, column |
+            unless database_table_columns.index{| column | column.name.upcase() == column_name.upcase() }
+              puts 'add column ' + column_name
+            end
           }
         end
 
