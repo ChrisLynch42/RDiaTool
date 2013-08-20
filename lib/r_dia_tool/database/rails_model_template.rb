@@ -5,10 +5,10 @@ module RDiaTool
       attr_reader :database_difference, :target_directory
 
       def generate
-        changes = @database_difference.change()
-        changes.each { | table_name, table_changes |
-          unless table_changes.nil?
-            unless table_changes.add().nil?
+        creations = @database_difference.create()
+        creations.each { | table_name, table_create |
+          unless table_create.nil?
+            unless table_create.add().nil?
               Dir.glob(@base_directory + "/*.erb").each { | file_name |
                 puts 'in the glob'
                 puts file_name

@@ -4,7 +4,7 @@ module RDiaTool
   module Database
 
     class DatabaseDifference
-      attr_reader :change, :database, :dia_xml
+      attr_reader :change, :database, :dia_xml, :create
 
 
       def initialize(dia_xml)
@@ -12,6 +12,7 @@ module RDiaTool
         @database_factory = DatabaseObjectFactory.new(dia_xml)
         @database = @database_factory.database()
         @change = Hash.new()
+        @create = Hash.new()
         compare_database_object_to_database()
       end
 
@@ -29,8 +30,8 @@ module RDiaTool
               puts 'check'
               puts ActiveRecord::Base.connection.columns(table_name).nil?
             else
-              @change[table_name]=DatabaseChange.new()
-              @change[table_name].add=database_object_tables[table_name].columns
+              @create[table_name]=DatabaseChange.new()
+              @create[table_name].add=database_object_tables[table_name].columns
             end
           }
         end

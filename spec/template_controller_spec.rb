@@ -91,44 +91,54 @@ module RDiaTool
         end
 
         describe "DatabaseDifference Instance" do
-
-          it "should have a parent @template_controller that is not nil" do
-            @template_controller.should_not be_nil
-          end
-
-          it "should not return nil receives the 'change' message" do
+          
+          before(:each) do
             @template_controller.analyze()
-            @template_controller.database_difference.change.should_not be_nil
           end
 
-          it "should return a hash when it receives the 'change' message" do
-            @template_controller.analyze()
-            @template_controller.database_difference.change.class.to_s.should == 'Hash'
+          it "should not return nil receives the 'create' message" do
+            @template_controller.database_difference.create.should_not be_nil
           end
 
-          describe "@template_controller.database_difference.change" do
+          it "should return a hash when it receives the 'create' message" do
+            @template_controller.database_difference.create.class.to_s.should == 'Hash'
+          end
+
+          describe "@template_controller.database_difference.create" do
             it "should a size of 2" do
-              @template_controller.analyze()
-              @template_controller.database_difference.change.length.should == 2
+              @template_controller.database_difference.create.length.should == 2
             end
+
             it "should contain a key of 'column_set'" do
-              @template_controller.analyze()
-              @template_controller.database_difference.change.include?('column_set').should be_true
+              @template_controller.database_difference.create.include?('column_set').should be_true
             end
-            describe "@template_controller.database_difference.change['column_set']" do
+
+            describe "@template_controller.database_difference.create['column_set']" do              
               it "should not be nil" do
-                @template_controller.analyze()
-                @template_controller.database_difference.change['column_set'].should_not be_nil
+                @template_controller.database_difference.create['column_set'].should_not be_nil
               end
-              it "should be an object of DatabaseChange class" do
-                @template_controller.analyze()
-                @template_controller.database_difference.change['column_set'].class.eql?(DatabaseChange).should be_true
+
+              it "should be an object of Hash class" do
+                @template_controller.database_difference.create['column_set'].class.eql?(DatabaseChange).should be_true
               end
-              it "should be return 2 when it recieves the 'add().length' message" do
-                @template_controller.analyze()
-                @template_controller.database_difference.change['column_set'].add().length.should == 2
+
+              it "should not return nil when 'add()' is called " do
+                @template_controller.database_difference.create['column_set'].add().should_not be_nil
+              end 
+
+              it "should return 2 when 'add().length' is called" do
+                @template_controller.database_difference.create['column_set'].add().length.should == 2
               end
+
+              it "should not return nil when 'add()[column_id]' is called " do
+                @template_controller.database_difference.create['column_set'].add()['column_id'].should_not be_nil
+              end 
+
+              it "should return 'number' when 'add()['column_id'].data_type' is called " do
+                @template_controller.database_difference.create['column_set'].add()['column_id'].data_type.should == 'number'
+              end             
             end
+
             describe "@template_controller.execute_template()" do
               before(:each) do
                 @template_controller.execute_template()
