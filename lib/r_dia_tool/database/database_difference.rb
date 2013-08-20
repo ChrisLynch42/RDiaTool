@@ -44,19 +44,25 @@ module RDiaTool
             print column.type
             puts column.name
             if table_design.columns.include?(column.name)
-              if column.type.upcase() == table_design.columns[column.name].data_type.upcase()
+                print column.type.upcase()
+                print '='
+                puts table_design.columns[column.name].data_type.upcase()
+                puts column.type.to_s().upcase().strip().eql?(table_design.columns[column.name].data_type.upcase().strip())
+              if column.type.to_s().upcase().strip() == table_design.columns[column.name].data_type.upcase().strip()
                 puts 'do nothing'
-              else
-                puts table_design.columns[column.name].data_type
+              else                
                 puts 'change column ' + column.name
+                @change[table_name].modify[column.name]=table_design.columns[column.name]
               end
             else
               puts 'remove column ' + column.name
+              @change[table_name].remove[column.name]=table_design.columns[column.name]
             end            
           }
           table_design.columns.each { | column_name, column |
             unless database_table_columns.index{| column | column.name.upcase() == column_name.upcase() }
               puts 'add column ' + column_name
+              @change[table_name].add[column.name]=table_design.columns[column.name]
             end
           }
         end

@@ -127,8 +127,8 @@ module RDiaTool
                   @template_controller.database_difference.create['column_set'].add().should_not be_nil
                 end 
 
-                it "should return 3 when 'add().length' is called" do
-                  @template_controller.database_difference.create['column_set'].add().length.should == 3
+                it "should return 4 when 'add().length' is called" do
+                  @template_controller.database_difference.create['column_set'].add().length.should == 4
                 end
 
                 it "should not return nil when 'add()[column_id]' is called " do
@@ -208,6 +208,16 @@ module RDiaTool
               it "should contain a key of 'column_set'" do
                 @template_controller.database_difference.change.include?('column_set').should be_true
               end
+
+              it "should return 1 when'change[column_set].remove().length'" do
+                @template_controller.database_difference.change['column_set'].remove().length.should == 1
+              end              
+              it "should return 2 when'change[column_set].add().length'" do
+                @template_controller.database_difference.change['column_set'].add().length.should == 2
+              end             
+              it "should return 1 when'change[column_set].modify().length'" do
+                @template_controller.database_difference.change['column_set'].modify().length.should == 1
+              end             
             end
           end          
 
