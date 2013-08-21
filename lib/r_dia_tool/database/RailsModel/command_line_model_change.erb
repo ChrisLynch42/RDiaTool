@@ -1,0 +1,27 @@
+<% 
+  @database_difference.change().each { | table_name, table_change | 
+    _erbout << 'rails generate migration AddColumnsTo'
+    _erbout << table_name.capitalize
+    table_change.add().each { | key, value|
+      if key.upcase() != 'ID'
+        _erbout << ' '
+        _erbout << key
+        _erbout << ':'
+        _erbout << value.data_type
+      end
+
+    }
+    _erbout << "\n"
+
+    _erbout << 'rails generate migration RemoveColumnsFrom'
+    _erbout << table_name.capitalize
+    table_change.remove().each { | key, value|
+      _erbout << ' '
+      _erbout << key
+      _erbout << ':'
+      _erbout << value.data_type
+
+    }
+    _erbout << "\n"    
+  } 
+%>

@@ -26,8 +26,6 @@ module RDiaTool
         def compare_tables(database_tables)
           @database.tables_by_name.each { | table_name, table_object |
             if database_tables.include?(table_name)
-              puts 'check'
-              puts table_name
               @change[table_name]=DatabaseChange.new()
               compare_columns(table_object,table_name)
 
@@ -41,27 +39,21 @@ module RDiaTool
         def compare_columns(table_design, table_name)
           database_table_columns = ActiveRecord::Base.connection.columns(table_name)
           database_table_columns.each { | column|
-            print column.type
-            puts column.name
             if table_design.columns.include?(column.name)
-                print column.type.upcase()
-                print '='
-                puts table_design.columns[column.name].data_type.upcase()
-                puts column.type.to_s().upcase().strip().eql?(table_design.columns[column.name].data_type.upcase().strip())
               if column.type.to_s().upcase().strip() == table_design.columns[column.name].data_type.upcase().strip()
-                puts 'do nothing'
+               # puts 'do nothing'
               else                
-                puts 'change column ' + column.name
                 @change[table_name].modify[column.name]=table_design.columns[column.name]
               end
             else
-              puts 'remove column ' + column.name
-              @change[table_name].remove[column.name]=table_design.columns[column.name]
+              remove_column = ColumnParser.new()
+              remove_column.name = column.name
+              remove_column.data_type = column.type.to_s
+              @change[table_name].remove[column.name]=remove_column
             end            
           }
           table_design.columns.each { | column_name, column |
             unless database_table_columns.index{| column | column.name.upcase() == column_name.upcase() }
-              puts 'add column ' + column_name
               @change[table_name].add[column.name]=table_design.columns[column.name]
             end
           }

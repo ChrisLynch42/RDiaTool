@@ -218,6 +218,19 @@ module RDiaTool
               it "should return 1 when'change[column_set].modify().length'" do
                 @template_controller.database_difference.change['column_set'].modify().length.should == 1
               end             
+              describe "@template_controller.execute_template()" do
+                before(:each) do
+                  @template_controller.execute_template()
+                end
+
+                after(:each) do
+                  #FileUtils.rm_rf(Dir.glob(@template_dir + '/*'))
+                end
+                it "should create 'table_change*.sh' file" do
+                  Dir.glob(@template_dir + "/tables_change*.sh").empty?().should be_false
+                end
+
+              end 
             end
           end          
 

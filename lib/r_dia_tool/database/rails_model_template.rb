@@ -11,7 +11,13 @@ module RDiaTool
             current_date = Time.now().strftime("%Y%m%d%H")
             run_erb(file_name,'tables_create_' + current_date + '.sh')
           }
-          #implement calling ERB Template
+        end
+        changes = @database_difference.change()
+        unless changes.nil? || changes.length <  1
+          Dir.glob(@base_directory + "/*change.erb").each { | file_name |
+            current_date = Time.now().strftime("%Y%m%d%H")
+            run_erb(file_name,'tables_change_' + current_date + '.sh')
+          }
         end
       end
 

@@ -1,0 +1,3 @@
+rails generate migration AddColumnsToColumn_set column_id:Integer set_id:Integer
+rails generate migration RemoveColumnsFromColumn_set nogood:string
+
