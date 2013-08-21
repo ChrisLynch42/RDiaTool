@@ -226,10 +226,15 @@ module RDiaTool
                 after(:each) do
                   #FileUtils.rm_rf(Dir.glob(@template_dir + '/*'))
                 end
-                it "should create 'table_change*.sh' file" do
-                  Dir.glob(@template_dir + "/tables_change*.sh").empty?().should be_false
+                it "should create 'tables_add_remove_command_line*.sh' file" do
+                  Dir.glob(@template_dir + "/tables_add_remove_command_line*.sh").empty?().should be_false
                 end
-
+                it "should create 'tables_create_command_line*.sh' file" do
+                  Dir.glob(@template_dir + "/tables_add_remove_command_line*.sh").empty?().should be_false
+                end
+                it "should create 'tables_migration_change*.sh' file" do
+                  Dir.glob(@template_dir + "/tables_migration_change*.sh").empty?().should be_false
+                end                
               end 
             end
           end          
