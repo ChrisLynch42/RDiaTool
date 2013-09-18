@@ -3,7 +3,7 @@ $LOAD_PATH.unshift File.expand_path('lib/r_dia_tool')
 $LOAD_PATH.unshift File.expand_path('lib/r_dia_tool/database')
 
 require 'nokogiri'
-require 'r_dia_tool'
+require 'dia_tool'
 require 'dia_parser'
 require 'reference_connection_point'
 require 'i_reference_parser'
@@ -21,7 +21,8 @@ require 'database_object'
 require 'database_object_factory'
 require 'template_controller'
 require 'rails_model_template'
-require 'database_difference'
+require 'i_database_difference'
+require 'rails_model_difference'
 require 'database_change'
 
 

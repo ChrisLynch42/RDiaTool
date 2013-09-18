@@ -1,9 +1,11 @@
 #!/usr/bin/env ruby
-$LOAD_PATH.unshift File.expand_path('../lib')
-$LOAD_PATH.unshift File.expand_path('../lib/r_dia_tool')
-$LOAD_PATH.unshift File.expand_path('../lib/r_dia_tool/database')
+$LOAD_PATH.unshift File.expand_path('lib')
+$LOAD_PATH.unshift File.expand_path('lib/r_dia_tool')
+$LOAD_PATH.unshift File.expand_path('lib/r_dia_tool/database')
 
-#require 'r_dia_tool'
-puts 'aaaaaaaaaaaaaaa'
-puts RDiaTool
-#RDiaTool.start
+puts File.expand_path('lib')
+
+require 'dia_tool'
+
+DiaTool.start
+

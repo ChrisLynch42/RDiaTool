@@ -14,21 +14,29 @@ class DiaTool < Thor
   method_option :target_dir, :aliases => "-d", :type => :string, :required => true, :desc => "This is the directory where you would like the generated code placed."  
   def database_generate(dia_database_diagram)
     has_error=false
-    unless File.exist?(dia_database_diagram)
+    unless dia_database_diagram.nil? || File.exist?(dia_database_diagram)
       puts "Dia database diagram does not exist"
       has_error=true
+    else
+      dia_database_diagram = File.expand_path(dia_database_diagram)
     end
-    unless Dir.exist?(options[:target_dir])
+    unless options[:target_dir].nil? || Dir.exist?(options[:target_dir])
       puts "Target directory does not exist"
       has_error=true
+    else
+      options[:target_dir] = File.expand_path(options[:target_dir])
     end
-    unless Dir.exist?(options[:rails_dir])
+    unless options[:rails_dir].nil? || Dir.exist?(options[:rails_dir])
       puts "Rails directory does not exist"
       has_error=true
+    else
+      options[:rails_dir] = File.expand_path(options[:rails_dir])
     end
-    unless File.exist?(options[:database_configuration])
+    unless options[:database_configuration].nil? || File.exist?(options[:database_configuration])
       puts "Database configuration file does not exist"
       has_error=true
+    else
+      options[:database_configuration] = File.expand_path(options[:database_configuration])
     end    
     if options[:template].nil?
       puts "You must select a template using --template"      

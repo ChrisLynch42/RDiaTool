@@ -3,11 +3,11 @@ require 'database_object_factory'
 module RDiaTool
   module Database
 
-    class DatabaseDifference
+    module IDatabaseDifference
       attr_reader :change, :database, :dia_xml, :create
 
 
-      def initialize(dia_xml)
+      def initialize_database_difference(dia_xml)
         @dia_xml=dia_xml
         @database_factory = DatabaseObjectFactory.new(dia_xml)
         @database = @database_factory.database()

@@ -1,21 +1,22 @@
 require 'active_record'
 require 'rails_model_template'
-require 'database_difference'
+require 'i_database_difference'
 
 module RDiaTool
   module Database
 
     class TemplateController
-      attr_reader :template, :dia_xml, :database_configuration, :template_instance, :database_difference, :target_directory
+      attr_reader :template, :dia_xml, :template_instance, :database_difference, :target_directory, :options
+      attr_accessor :database_configuration
 
-      def initialize(dia_xml,template,target_directory,database_configuration)
+      def initialize(dia_xml,template,target_directory,options)
         @template=template
         @dia_xml=dia_xml
         @target_directory=target_directory
-        @database_configuration=database_configuration
-        unless database_configuration.nil? || database_configuration.kind_of?(Hash)
-          raise Exception.new("database configuration is not a hash")
-        end
+        @options=options
+#        unless database_configuration.nil? || database_configuration.kind_of?(Hash)
+#          raise Exception.new("database configuration is not a hash")
+#        end
       end
 
 
@@ -52,7 +53,10 @@ module RDiaTool
 
       def analyze
         connect()
-        @database_difference = DatabaseDifference.new(@dia_xml)
+        class_string = "RDiaTool::Database::"+ template + "Difference"
+        class_constant = class_string.constantize
+        @database_difference = class_constant.new(@dia_xml,@options)
+        !@database_difference.nil?
       end
 
     end

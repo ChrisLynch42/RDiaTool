@@ -31,6 +31,9 @@ module RDiaTool
           TemplateController.instance_methods(false).include?(:target_directory).should be_true
         end
 
+        it "TemplateController should have attribute 'options' defined" do
+          TemplateController.instance_methods(false).include?(:options).should be_true
+        end
       end
 
       describe "Instance" do
@@ -49,7 +52,9 @@ module RDiaTool
             FileUtils.cp(database_file,@temp_database)
             database_file= @temp_database + '/' + file_name
             database_config= { 'adapter' => 'sqlite3', 'database' => database_file}
-            @template_controller = RDiaTool::Database::TemplateController.new(dia_xml,'RailsModel',@template_dir,database_config)
+            options = {:rails_dir => nil}
+            @template_controller = RDiaTool::Database::TemplateController.new(dia_xml,'RailsModel',@template_dir,options)
+            @template_controller.database_configuration=database_config
           end
 
           after(:each) do
@@ -172,7 +177,9 @@ module RDiaTool
             FileUtils.cp(database_file,@temp_database)
             database_file= @temp_database + '/' + file_name
             database_config= { 'adapter' => 'sqlite3', 'database' => database_file}
-            @template_controller = RDiaTool::Database::TemplateController.new(dia_xml,'RailsModel',@template_dir,database_config)
+            options = {:rails_dir => nil}
+            @template_controller = RDiaTool::Database::TemplateController.new(dia_xml,'RailsModel',@template_dir,options)
+            @template_controller.database_configuration=database_config
           end
 
           after(:each) do
