@@ -52,8 +52,8 @@ module RDiaTool
             FileUtils.cp(database_file,@temp_database)
             database_file= @temp_database + '/' + file_name
             database_config= { 'adapter' => 'sqlite3', 'database' => database_file}
-            options = {:rails_dir => nil}
-            @template_controller = RDiaTool::Database::TemplateController.new(dia_xml,'RailsModel',@template_dir,options)
+            options = {:rails_dir => nil, :target_dir => @template_dir, :template => 'RailsModel' }            
+            @template_controller = RDiaTool::Database::TemplateController.new(dia_xml,options)
             @template_controller.database_configuration=database_config
           end
 
@@ -177,8 +177,8 @@ module RDiaTool
             FileUtils.cp(database_file,@temp_database)
             database_file= @temp_database + '/' + file_name
             database_config= { 'adapter' => 'sqlite3', 'database' => database_file}
-            options = {:rails_dir => nil}
-            @template_controller = RDiaTool::Database::TemplateController.new(dia_xml,'RailsModel',@template_dir,options)
+            options = {:rails_dir => nil, :target_dir => @template_dir, :template => 'RailsModel' }            
+            @template_controller = RDiaTool::Database::TemplateController.new(dia_xml,options)
             @template_controller.database_configuration=database_config
           end
 
@@ -225,6 +225,7 @@ module RDiaTool
               it "should return 1 when'change[column_set].modify().length'" do
                 @template_controller.database_difference.change['column_set'].modify().length.should == 1
               end             
+              
               describe "@template_controller.execute_template()" do
                 before(:each) do
                   @template_controller.execute_template()
@@ -247,7 +248,33 @@ module RDiaTool
           end          
 
         end
+        describe "Work with rails project" do
+          before(:each) do
+            dia_xml=loadTestXML()
+            base_dir=File.dirname(__FILE__)
+            @temp_rails=base_dir + "/temp_rails"
+            @rails_dir=base_dir + "/test_rails"
+            unless FileTest::directory?(@temp_rails)
+              Dir::mkdir(@temp_rails)
+            end
+            @template_dir=base_dir + "/template_test"
+            unless FileTest::directory?(@template_dir)
+              Dir::mkdir(@template_dir)
+            end
+            
+
+            FileUtils.cp_r(Dir.glob(@rails_dir + '/*'),@temp_rails, :remove_destination => true)
+            @temp_rails = @temp_rails + '/TestRails'
+            options = {:rails_dir => @temp_rails, :target_dir => @template_dir, :template => 'RailsModel' }
+            #@template_controller = RDiaTool::Database::TemplateController.new(dia_xml,'RailsModel',@template_dir,options)
+            #@template_controller.database_configuration=database_config
+          end
+          it "should do stuff" do
+            true
+          end          
+        end        
       end
+
     end
   end
 end

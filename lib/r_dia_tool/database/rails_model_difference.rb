@@ -18,9 +18,6 @@ module RDiaTool
         return @root
       end
 
-      private
-
-
     end
   end
 end

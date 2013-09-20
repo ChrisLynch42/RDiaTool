@@ -9,10 +9,10 @@ module RDiaTool
       attr_reader :template, :dia_xml, :template_instance, :database_difference, :target_directory, :options
       attr_accessor :database_configuration
 
-      def initialize(dia_xml,template,target_directory,options)
-        @template=template
+      def initialize(dia_xml,options)
+        @template=options[:template]
         @dia_xml=dia_xml
-        @target_directory=target_directory
+        @target_directory=options[:target_dir]
         @options=options
 #        unless database_configuration.nil? || database_configuration.kind_of?(Hash)
 #          raise Exception.new("database configuration is not a hash")
