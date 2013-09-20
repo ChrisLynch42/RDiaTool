@@ -14,6 +14,20 @@ module RDiaTool
         @dia_xml=dia_xml
         @target_directory=options[:target_dir]
         @options=options
+        unless @options.nil? || @options.kind_of?(Hash)
+          raise Exception.new("Options is not a hash")
+        end
+        if @options[:rails_dir]
+          config_file = @options[:rails_dir]
+          config_file = config_file + '/config/database.yml'
+          @database_configuration = YAML.load(File.read(config_file))
+        else
+          if @options[:database_configuration]
+            config_file = @options[:database_configuration]
+            @database_configuration = YAML.load(File.read(config_file))
+          end          
+        end
+        
 #        unless database_configuration.nil? || database_configuration.kind_of?(Hash)
 #          raise Exception.new("database configuration is not a hash")
 #        end
@@ -21,6 +35,9 @@ module RDiaTool
 
 
       def connect
+        if @database_configuration.nil?
+          raise Exception.new("Database configuration is nil.")
+        end        
         unless FileTest.exist?(@database_configuration['database'])
           raise Exception.new("Database " + @database_configuration['database'] + " does not exist.")
         end        

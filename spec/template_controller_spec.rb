@@ -266,12 +266,14 @@ module RDiaTool
             FileUtils.cp_r(Dir.glob(@rails_dir + '/*'),@temp_rails, :remove_destination => true)
             @temp_rails = @temp_rails + '/TestRails'
             options = {:rails_dir => @temp_rails, :target_dir => @template_dir, :template => 'RailsModel' }
-            #@template_controller = RDiaTool::Database::TemplateController.new(dia_xml,'RailsModel',@template_dir,options)
+            @template_controller = RDiaTool::Database::TemplateController.new(dia_xml,options)
             #@template_controller.database_configuration=database_config
           end
-          it "should do stuff" do
-            true
-          end          
+
+          it "@template_controller should not return nil when 'database_configuration' is called" do
+            @template_controller.database_configuration.should_not be_nil
+          end
+
         end        
       end
 
