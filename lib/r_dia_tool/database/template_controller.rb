@@ -19,7 +19,7 @@ module RDiaTool
         end
         if @options[:rails_dir]
           config_file = @options[:rails_dir]
-          config_file = config_file + '/config/database.yml'
+          config_file = config_file + '/config/database.yml'          
           @database_configuration = YAML.load(File.read(config_file))
         else
           if @options[:database_configuration]
@@ -37,11 +37,21 @@ module RDiaTool
       def connect
         if @database_configuration.nil?
           raise Exception.new("Database configuration is nil.")
+        end                
+        if @database_configuration['development']
+          config = @database_configuration['development']
+        else
+          config = @database_configuration
+        end
+        unless config['database'][0] == '/'
+          config['database']=@options[:rails_dir] + '/' + config['database']
         end        
-        unless FileTest.exist?(@database_configuration['database'])
-          raise Exception.new("Database " + @database_configuration['database'] + " does not exist.")
+        unless FileTest.exist?(config['database'])
+          raise Exception.new("Database " + config['database'] + " does not exist.")
+        else
+
         end        
-        ActiveRecord::Base.establish_connection(@database_configuration)
+        ActiveRecord::Base.establish_connection(config)
         ActiveRecord::Base.connection.tables
         unless ActiveRecord::Base.connected?
           raise Exception.new("Database Connection failed!")
