@@ -173,6 +173,21 @@ module RDiaTool
         @table_parser.columns['set_id'].name.should == 'set_id'
       end
 
+      it "@table_parser should not return 'nil' when it recieves the 'columns_in_order' message" do
+        @table_parser.columns.should_not be_nil
+      end
+
+      it "@table_parser.columns_in_order should return '2' when it recieves the 'size' message" do
+        @table_parser.columns_in_order.size.should == 2
+      end
+
+      it "@table_parser.columns_in_order[0] should not return 'nil'" do
+        @table_parser.columns_in_order[0].should_not be_nil
+      end
+
+      it "@table_parser.columns_in_order[0] should return 'set_id' when it recieves the 'name' message" do
+        @table_parser.columns_in_order[0].name.should == 'column_id'
+      end      
     end
     end
   end

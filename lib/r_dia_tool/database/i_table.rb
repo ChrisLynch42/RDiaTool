@@ -6,7 +6,7 @@ module RDiaTool
   module Database
     module ITable
 
-      attr_accessor :name, :columns
+      attr_accessor :name, :columns, :columns_in_order
 
 
     end

@@ -13,7 +13,9 @@ module RDiaTool
         it "should have method 'columns' defined" do
           ITable.instance_methods(false).include?(:columns).should be_true
         end
-
+        it "should have method 'columns_in_order' defined" do
+          ITable.instance_methods(false).include?(:columns_in_order).should be_true
+        end
       end
 
 

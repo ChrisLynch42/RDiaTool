@@ -10,6 +10,7 @@ module RDiaTool
 
       def set_up() 
         self.columns = Hash.new()
+        self.columns_in_order = Array.new()
       end 
 
 
@@ -26,6 +27,7 @@ module RDiaTool
             columnParser = ColumnParser.new()
             columnParser.parse(column_node)
             self.columns[columnParser.name]=columnParser 
+            self.columns_in_order[self.columns_in_order.length]=columnParser 
           }
         end
 
