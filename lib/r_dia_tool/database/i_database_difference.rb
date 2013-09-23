@@ -41,7 +41,7 @@ module RDiaTool
           database_table_columns.each { | column|
             if table_design.columns.include?(column.name)
               if column.type.to_s().upcase().strip() == table_design.columns[column.name].data_type.upcase().strip()
-               # puts 'do nothing'
+               # 'do nothing'
               else                
                 @change[table_name].modify[column.name]=table_design.columns[column.name]
               end
@@ -59,12 +59,6 @@ module RDiaTool
           }
         end
 
-        def add_column(database_change, column_object)
-          puts 'add_column'
-          unless database_change.nil?            
-
-          end
-        end
     end
   end
 end

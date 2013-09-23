@@ -3,6 +3,7 @@ require 'dia_connection_point'
 module RDiaTool
   module Database
     class ReferenceConnectionPoint < DiaConnectionPoint
+      attr_accessor :column_name, :table_name
       
       def initialize() 
         @translate_hash = Hash.new()
@@ -16,8 +17,10 @@ module RDiaTool
         }
       end
 
-
-
+      def column_order
+        connection_to_column_order(@connection)
+      end
+     
       def connection_to_column_order(connection_point)
         @translate_hash[connection_point]
       end

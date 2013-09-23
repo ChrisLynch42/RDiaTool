@@ -20,6 +20,7 @@ module RDiaTool
       end
 
       describe "Instance" do
+
         before(:each) do 
           @factory = DatabaseObjectFactory.new(loadTestXML())
           @database_object = @factory.database()
@@ -110,6 +111,25 @@ module RDiaTool
 
           it "references_by_target.size should be 2" do
             @database_object.references_by_target.size.should == 1
+          end
+
+          it "get_point_table_name(references_by_origin[O0]) should return 'column_set'" do
+            point = @database_object.references_by_origin['O0'].start_point
+            table_name = @database_object.get_point_table_name(point)
+            table_name.should == 'column_set'
+          end
+
+           it "get_point_column_name(references_by_origin[O0]) should return 'column_id'" do
+            point = @database_object.references_by_origin['O0'].start_point
+            column_name = @database_object.get_point_column_name(point)
+            column_name.should == 'column_id'
+          end
+
+           it "set_reference_names should set names for all references" do
+             @database_object.set_reference_names()
+             point = @database_object.references_by_origin['O0'].start_point
+             point.table_name.should == 'column_set'
+             point.column_name.should == 'column_id'
           end
         end
 

@@ -140,8 +140,8 @@ module RDiaTool
                   @template_controller.database_difference.create['column_set'].add()['column_id'].should_not be_nil
                 end 
 
-                it "should return 'number' when 'add()['column_id'].data_type' is called " do
-                  @template_controller.database_difference.create['column_set'].add()['column_id'].data_type.should == 'Integer'
+                it "should return 'Reference' when 'add()['column_id'].data_type' is called " do
+                  @template_controller.database_difference.create['column_set'].add()['column_id'].data_type.should == 'Reference'
                 end             
               end
 
@@ -232,7 +232,7 @@ module RDiaTool
                 end
 
                 after(:each) do
-                  #FileUtils.rm_rf(Dir.glob(@template_dir + '/*'))
+                  FileUtils.rm_rf(Dir.glob(@template_dir + '/*'))
                 end
                 it "should create 'tables_add_remove_command_line*.sh' file" do
                   Dir.glob(@template_dir + "/tables_add_remove_command_line*.sh").empty?().should be_false
@@ -267,7 +267,6 @@ module RDiaTool
             @temp_rails = @temp_rails + '/TestRails'
             options = {:rails_dir => @temp_rails, :target_dir => @template_dir, :template => 'RailsModel' }
             @template_controller = RDiaTool::Database::TemplateController.new(dia_xml,options)
-            #@template_controller.database_configuration=database_config
           end
 
           it "@template_controller should not return nil when 'database_configuration' is called" do
@@ -289,6 +288,7 @@ module RDiaTool
             after(:each) do
               #FileUtils.rm_rf(Dir.glob(@template_dir + '/*'))
             end
+            
             it "should create 'table_create*.sh' file" do
               Dir.glob(@template_dir + "/tables_create*.sh").empty?().should be_false
             end
