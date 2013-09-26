@@ -132,8 +132,8 @@ module RDiaTool
                   @template_controller.database_difference.create['column_set'].add().should_not be_nil
                 end 
 
-                it "should return 4 when 'add().length' is called" do
-                  @template_controller.database_difference.create['column_set'].add().length.should == 4
+                it "should return 5 when 'add().length' is called" do
+                  @template_controller.database_difference.create['column_set'].add().length.should == 5
                 end
 
                 it "should not return nil when 'add()[column_id]' is called " do
@@ -141,8 +141,20 @@ module RDiaTool
                 end 
 
                 it "should return 'Reference' when 'add()['column_id'].data_type' is called " do
-                  @template_controller.database_difference.create['column_set'].add()['column_id'].data_type.should == 'Reference'
-                end             
+                  @template_controller.database_difference.create['column_set'].add()['column_id'].data_type.should == 'belongs_to'
+                end 
+
+                it "should return 'integer' when 'add()['set_id'].data_type' is called " do
+                  @template_controller.database_difference.create['column_set'].add()['set_id'].data_type.should == 'integer'
+                end 
+
+                it "should return 'string' when 'add()['changeme'].data_type' is called " do
+                  @template_controller.database_difference.create['column_set'].add()['changeme'].data_type.should == 'string'
+                end
+
+                it "should return 'string' when 'add()['convertme'].data_type' is called " do
+                  @template_controller.database_difference.create['column_set'].add()['convertme'].data_type.should == 'string'
+                end
               end
 
               describe "@template_controller.execute_template()" do
@@ -219,8 +231,8 @@ module RDiaTool
               it "should return 1 when'change[column_set].remove().length'" do
                 @template_controller.database_difference.change['column_set'].remove().length.should == 1
               end              
-              it "should return 2 when'change[column_set].add().length'" do
-                @template_controller.database_difference.change['column_set'].add().length.should == 2
+              it "should return 3 when'change[column_set].add().length'" do
+                @template_controller.database_difference.change['column_set'].add().length.should == 3
               end             
               it "should return 1 when'change[column_set].modify().length'" do
                 @template_controller.database_difference.change['column_set'].modify().length.should == 1
@@ -248,7 +260,7 @@ module RDiaTool
           end          
 
         end
-        describe "Work with rails project" do
+        describe "Work with RailsModel project" do
           before(:each) do
             dia_xml=loadTestXML()
             base_dir=File.dirname(__FILE__)
@@ -269,6 +281,10 @@ module RDiaTool
             @template_controller = RDiaTool::Database::TemplateController.new(dia_xml,options)
           end
 
+          after(:each) do
+            FileUtils.rm_rf(@temp_rails)
+          end
+
           it "@template_controller should not return nil when 'database_configuration' is called" do
             @template_controller.database_configuration.should_not be_nil
           end
@@ -286,7 +302,7 @@ module RDiaTool
             end
 
             after(:each) do
-              #FileUtils.rm_rf(Dir.glob(@template_dir + '/*'))
+              FileUtils.rm_rf(Dir.glob(@template_dir + '/*'))
             end
             
             it "should create 'table_create*.sh' file" do
