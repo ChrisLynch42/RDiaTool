@@ -1,0 +1,35 @@
+<% 
+    _erbout << 'class Create'
+    _erbout << template_variables['table_name'].capitalize
+    _erbout << " < ActiveRecord::Migration\n"
+    _erbout << "  def change\n"
+    _erbout << "    create_table"
+    _erbout << " :" + template_variables['table_name']
+    _erbout << " do | t |\n"
+    template_variables['table_change'].add().each do | key, value|
+      if key.upcase() != 'ID'
+        _erbout << "      t." 
+        _erbout << value.data_type
+        _erbout << ' :'
+        _erbout << key
+        _erbout << "\n"
+      end
+
+    end
+    _erbout << "      t.timestamps\n"
+    _erbout << "    end\n"
+    template_variables['table_change'].add().each do | key, value|
+      if value.data_type == 'belongs_to'
+        _erbout << "  add_index :" 
+        _erbout << template_variables['table_name']
+        _erbout << ', :'
+        _erbout << key
+        _erbout << "\n"
+      end
+
+    end    
+    _erbout << "  end\n"
+    _erbout << "end\n"
+    _erbout << "\n"
+    _erbout << "\n"
+%>

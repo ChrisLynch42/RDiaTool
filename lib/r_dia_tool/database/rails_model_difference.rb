@@ -8,7 +8,7 @@ module RDiaTool
 
       attr_reader :options
 
-
+      public
       def initialize(dia_xml, options)
         @translation_hash = { 'varchar' => 'string', 'varchar2' => 'string' }
         @options=options
@@ -20,6 +20,11 @@ module RDiaTool
         reference_relationships()
       end
 
+      def root?
+        return @root
+      end
+
+      private
       def reference_relationships
         database.references_by_origin.each do | key, reference |
           if create[database.tables_by_id[key].name]
@@ -60,10 +65,6 @@ module RDiaTool
           holder
         end
       end      
-
-      def root?
-        return @root
-      end
 
     end
   end

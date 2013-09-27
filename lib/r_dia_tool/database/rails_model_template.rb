@@ -16,7 +16,7 @@ module RDiaTool
         changes = @database_difference.change()
         unless changes.nil? || changes.length <  1
           changes.each { | table_name, table_change |
-            unless (table_change.add().nil?  || table_change.add().length < 1) || (table_change.remove().nil?  || table_change.remove().length < 1)
+            unless (table_change.add().nil?  || table_change.add().length < 1) && (table_change.remove().nil?  || table_change.remove().length < 1)
               Dir.glob(@base_directory + "/*model_change.erb").each { | file_name |
                 current_date = Time.now().strftime("%Y%m%d%H")
                 run_erb(file_name,'tables_add_remove_command_line_' + current_date + '.sh')
@@ -41,7 +41,7 @@ module RDiaTool
       def initialize(database_difference,target_directory)
         @database_difference=database_difference
         @target_directory=target_directory
-        @base_directory = base_dir=File.dirname(__FILE__) + "/RailsModel"
+        @base_directory = File.dirname(__FILE__) + "/RailsModel"
         if @database_difference.change().nil?
           raise "@database_difference.change() is nil"
         end 

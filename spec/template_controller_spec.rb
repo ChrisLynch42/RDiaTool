@@ -288,6 +288,7 @@ module RDiaTool
           it "@template_controller should not return nil when 'database_configuration' is called" do
             @template_controller.database_configuration.should_not be_nil
           end
+
           it "@template_controller.database_configuration should not return nil when '[development]' is called" do
             @template_controller.database_configuration['development'].should_not be_nil
           end
@@ -310,6 +311,106 @@ module RDiaTool
             end
 
           end
+        end        
+        describe "Work with RailsModelContinuous project to create tables" do
+          before(:each) do
+            dia_xml=loadTestXML()
+            base_dir=File.dirname(__FILE__)
+            @temp_rails=base_dir + "/temp_rails"
+            @rails_dir=base_dir + "/test_rails"
+            unless FileTest::directory?(@temp_rails)
+              Dir::mkdir(@temp_rails)
+            end
+            @template_dir=base_dir + "/template_test"
+            unless FileTest::directory?(@template_dir)
+              Dir::mkdir(@template_dir)
+            end
+            
+
+            FileUtils.cp_r(Dir.glob(@rails_dir + '/*'),@temp_rails, :remove_destination => true)
+            @temp_rails = @temp_rails + '/TestRails'
+            options = {:rails_dir => @temp_rails, :target_dir => @template_dir, :template => 'RailsModelContinuous' }
+            @template_controller = RDiaTool::Database::TemplateController.new(dia_xml,options)
+          end
+
+          after(:each) do
+            #FileUtils.rm_rf(@temp_rails)
+          end
+          it "@template_controller should not return nil when 'database_configuration' is called" do
+            @template_controller.database_configuration.should_not be_nil
+          end
+
+          it "@template_controller.database_configuration should not return nil when '[development]' is called" do
+            @template_controller.database_configuration['development'].should_not be_nil
+          end
+
+          it "@template_controller.database_configuration[development] should not return nil when '[database]' is called" do
+            @template_controller.database_configuration['development']['database'].should_not be_nil
+          end          
+
+          describe "@template_controller.execute_template()" do
+
+            before(:each) do
+              @template_controller.execute_template()
+            end
+
+            after(:each) do
+              #FileUtils.rm_rf(Dir.glob(@template_dir + '/*'))
+            end
+            
+            it "should create '*create_column.rb' file" do
+              Dir.glob(@template_dir + "/*create_column.rb").empty?().should be_false
+            end
+
+            it "should create '*create_column_set.rb' file" do
+              Dir.glob(@template_dir + "/*create_column_set.rb").empty?().should be_false
+            end            
+          end          
+
+        end
+
+        describe "Work with RailsModelContinuous project to change tables" do
+          before(:each) do
+            dia_xml=loadTestXML()
+            base_dir=File.dirname(__FILE__)
+            @temp_rails=base_dir + "/temp_rails"
+            @rails_dir=base_dir + "/test_rails"
+            unless FileTest::directory?(@temp_rails)
+              Dir::mkdir(@temp_rails)
+            end
+            @template_dir=base_dir + "/template_test"
+            @database_dir=base_dir + "/test_database"
+            unless FileTest::directory?(@template_dir)
+              Dir::mkdir(@template_dir)
+            end
+            
+
+            FileUtils.cp_r(Dir.glob(@rails_dir + '/*'),@temp_rails, :remove_destination => true)
+            @temp_rails = @temp_rails + '/TestRails'
+            FileUtils.cp(@database_dir + '/change.sqlite3',@temp_rails + '/db/development.sqlite3')
+            options = {:rails_dir => @temp_rails, :target_dir => @template_dir, :template => 'RailsModelContinuous' }
+            @template_controller = RDiaTool::Database::TemplateController.new(dia_xml,options)
+          end
+
+          after(:each) do
+            #FileUtils.rm_rf(@temp_rails)
+          end
+
+          describe "@template_controller.execute_template()" do
+
+            before(:each) do
+              @template_controller.execute_template()
+            end
+
+            after(:each) do
+              #FileUtils.rm_rf(Dir.glob(@template_dir + '/*'))
+            end
+            
+            it "should create '*create_column.rb' file" do
+              Dir.glob(@template_dir + "/*change_column_set.rb").empty?().should be_false
+            end
+
+          end          
         end        
       end
 
