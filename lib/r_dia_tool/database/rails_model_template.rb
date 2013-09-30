@@ -38,9 +38,10 @@ module RDiaTool
         end
       end
 
-      def initialize(database_difference,target_directory)
+      def initialize(database_difference,options)
         @database_difference=database_difference
-        @target_directory=target_directory
+
+        @target_directory=options[:target_dir]
         @base_directory = File.dirname(__FILE__) + "/RailsModel"
         if @database_difference.change().nil?
           raise "@database_difference.change() is nil"

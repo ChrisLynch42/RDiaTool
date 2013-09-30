@@ -31,8 +31,12 @@ module RDiaTool
         end
       end
 
-      def initialize(database_difference,target_directory)
-        super(database_difference,target_directory)
+      def initialize(database_difference,options)
+        super(database_difference,options)
+        @target_directory = options[:rails_dir] + "/db/migrate"
+        unless FileTest::directory?(@target_directory)
+          Dir::mkdir(@target_directory)
+        end        
         @base_directory = File.dirname(__FILE__) + "/RailsModelContinuous"        
       end
 

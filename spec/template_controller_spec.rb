@@ -321,20 +321,17 @@ module RDiaTool
             unless FileTest::directory?(@temp_rails)
               Dir::mkdir(@temp_rails)
             end
-            @template_dir=base_dir + "/template_test"
-            unless FileTest::directory?(@template_dir)
-              Dir::mkdir(@template_dir)
-            end
+            @migration_dir=@temp_rails + "/TestRails/db/migrate"
             
 
             FileUtils.cp_r(Dir.glob(@rails_dir + '/*'),@temp_rails, :remove_destination => true)
             @temp_rails = @temp_rails + '/TestRails'
-            options = {:rails_dir => @temp_rails, :target_dir => @template_dir, :template => 'RailsModelContinuous' }
+            options = {:rails_dir => @temp_rails, :template => 'RailsModelContinuous' }
             @template_controller = RDiaTool::Database::TemplateController.new(dia_xml,options)
           end
 
           after(:each) do
-            #FileUtils.rm_rf(@temp_rails)
+            FileUtils.rm_rf(@temp_rails)
           end
           it "@template_controller should not return nil when 'database_configuration' is called" do
             @template_controller.database_configuration.should_not be_nil
@@ -354,16 +351,12 @@ module RDiaTool
               @template_controller.execute_template()
             end
 
-            after(:each) do
-              #FileUtils.rm_rf(Dir.glob(@template_dir + '/*'))
-            end
-            
             it "should create '*create_column.rb' file" do
-              Dir.glob(@template_dir + "/*create_column.rb").empty?().should be_false
+              Dir.glob(@migration_dir + "/*create_column.rb").empty?().should be_false
             end
 
             it "should create '*create_column_set.rb' file" do
-              Dir.glob(@template_dir + "/*create_column_set.rb").empty?().should be_false
+              Dir.glob(@migration_dir + "/*create_column_set.rb").empty?().should be_false
             end            
           end          
 
@@ -378,22 +371,18 @@ module RDiaTool
             unless FileTest::directory?(@temp_rails)
               Dir::mkdir(@temp_rails)
             end
-            @template_dir=base_dir + "/template_test"
+            @migration_dir=@temp_rails + "/TestRails/db/migrate"
             @database_dir=base_dir + "/test_database"
-            unless FileTest::directory?(@template_dir)
-              Dir::mkdir(@template_dir)
-            end
-            
 
             FileUtils.cp_r(Dir.glob(@rails_dir + '/*'),@temp_rails, :remove_destination => true)
             @temp_rails = @temp_rails + '/TestRails'
             FileUtils.cp(@database_dir + '/change.sqlite3',@temp_rails + '/db/development.sqlite3')
-            options = {:rails_dir => @temp_rails, :target_dir => @template_dir, :template => 'RailsModelContinuous' }
+            options = {:rails_dir => @temp_rails, :template => 'RailsModelContinuous' }
             @template_controller = RDiaTool::Database::TemplateController.new(dia_xml,options)
           end
 
           after(:each) do
-            #FileUtils.rm_rf(@temp_rails)
+            FileUtils.rm_rf(@temp_rails)
           end
 
           describe "@template_controller.execute_template()" do
@@ -402,12 +391,8 @@ module RDiaTool
               @template_controller.execute_template()
             end
 
-            after(:each) do
-              #FileUtils.rm_rf(Dir.glob(@template_dir + '/*'))
-            end
-            
             it "should create '*create_column.rb' file" do
-              Dir.glob(@template_dir + "/*change_column_set.rb").empty?().should be_false
+              Dir.glob(@migration_dir + "/*change_column_set.rb").empty?().should be_false
             end
 
           end          

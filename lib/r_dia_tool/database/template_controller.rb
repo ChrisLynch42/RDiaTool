@@ -67,7 +67,7 @@ module RDiaTool
         analyze()
         class_string = "RDiaTool::Database::"+ template + "Template"
         class_constant = class_string.constantize
-        @template_instance = class_constant.new(@database_difference,@target_directory)
+        @template_instance = class_constant.new(@database_difference,options)
         !@template_instance.nil?
       end
 
