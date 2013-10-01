@@ -322,6 +322,7 @@ module RDiaTool
               Dir::mkdir(@temp_rails)
             end
             @migration_dir=@temp_rails + "/TestRails/db/migrate"
+            @model_dir=@temp_rails + "/TestRails/app/models"
             
 
             FileUtils.cp_r(Dir.glob(@rails_dir + '/*'),@temp_rails, :remove_destination => true)
@@ -331,7 +332,7 @@ module RDiaTool
           end
 
           after(:each) do
-            FileUtils.rm_rf(@temp_rails)
+            #FileUtils.rm_rf(@temp_rails)
           end
           it "@template_controller should not return nil when 'database_configuration' is called" do
             @template_controller.database_configuration.should_not be_nil
@@ -357,7 +358,11 @@ module RDiaTool
 
             it "should create '*create_column_set.rb' file" do
               Dir.glob(@migration_dir + "/*create_column_set.rb").empty?().should be_false
-            end            
+            end 
+
+             it "should create 'column.rb' model file" do
+              Dir.glob(@model_dir + "/column.rb").empty?().should be_false
+            end           
           end          
 
         end
@@ -382,7 +387,7 @@ module RDiaTool
           end
 
           after(:each) do
-            FileUtils.rm_rf(@temp_rails)
+            #FileUtils.rm_rf(@temp_rails)
           end
 
           describe "@template_controller.execute_template()" do

@@ -1,0 +1,17 @@
+<%
+  _erbout << 'class '
+  _erbout << template_variables['table_name'].capitalize
+  _erbout << " < ActiveRecord::Base\n"
+  _erbout << '  attr_accessible '
+
+  template_variables['database'].tables_by_name[template_variables['table_name']].columns().each do | key, value|
+    if key.upcase() != 'ID'
+      _erbout << ' :' 
+      _erbout << key
+      _erbout << ', ' 
+    end
+  end
+  _erbout << "\n"
+
+  _erbout << "end\n"
+%>
