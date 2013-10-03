@@ -20,11 +20,12 @@ module RDiaTool
         unless changes.nil? || changes.length <  1
           changes.each do | table_name, table_change |
             unless (table_change.add().nil?  || table_change.add().length < 1) && (table_change.remove().nil?  || table_change.remove().length < 1)
-              template_variables = { 'table_name' => table_name, 'table_change' => table_change }
+              template_variables = { 'table_name' => table_name, 'table_change' => table_change, 'database' => @database_difference.database  }
               Dir.glob(@base_directory + "/migration*change.erb").each do | file_name |
                 current_date = Time.now().strftime("%Y%m%d%H")
                 run_erb(file_name,current_date + ' _change_' + table_name + '.rb', template_variables,@migrate_directory)
               end
+              modify_models(table_name,table_change, template_variables)           
             end
           end
         end
