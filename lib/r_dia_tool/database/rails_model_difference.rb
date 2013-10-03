@@ -27,14 +27,8 @@ module RDiaTool
       private
       def reference_relationships
         database.references_by_origin.each do | key, reference |
-          if create[database.tables_by_id[key].name]
-            create[database.tables_by_id[key].name].add[reference.start_point.column_name].data_type='belongs_to'
-          end
-          if change[database.tables_by_id[key].name]
-            if change[database.tables_by_id[key].name].modify[reference.start_point.column_name]
-              change[database.tables_by_id[key].name].modify[reference.start_point.column_name].data_type='belongs_to'
-            end
-          end          
+          @database.tables_by_name[database.tables_by_id[key].name].columns[reference.start_point.column_name].foreign_table=reference.end_point.table_name
+          @database.tables_by_name[database.tables_by_id[key].name].columns[reference.start_point.column_name].foreign_column=reference.end_point.column_name
         end
       end
 

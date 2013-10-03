@@ -2,15 +2,28 @@
   _erbout << "  ###Do not edit the below \n"
   _erbout << "  ###Begin RDiaTool Code \n"
   attributes = '  attr_accessible '
-
+  references = Array.new()
   template_variables['database'].tables_by_name[template_variables['table_name']].columns().each do | key, value|
     if key.upcase() != 'ID'
       attributes << ' :' 
       attributes << key
       attributes << ', ' 
+      if value.foreign_table
+        _erbout << "ccc\n"
+        references[references.length]=value
+      end      
     end
   end
   _erbout << attributes[0..-3]
   _erbout << "\n"
+
+  _erbout << "aaaaa\n"
+  _erbout << references.length.to_s
+  references.each do | reference |
+    _erbout << ' belongs_to :'    
+    _erbout << reference.foreign_table
+    _erbout << "\n"    
+  end
+
   _erbout << "  ###Do not edit the above \n"
 %>

@@ -16,12 +16,8 @@ module RDiaTool
         end
 
 
-        it "should have attribute 'references_by_origin' defined" do
-          DatabaseObject.instance_methods(false).include?(:references_by_origin).should be_true
-        end
-
-        it "should have attribute 'references_by_target' defined" do
-          DatabaseObject.instance_methods(false).include?(:references_by_target).should be_true
+        it "should have attribute 'references' defined" do
+          DatabaseObject.instance_methods(false).include?(:references).should be_true
         end
 
         it "should have attribute 'get_point_column_name' defined" do

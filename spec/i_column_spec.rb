@@ -26,12 +26,8 @@ module RDiaTool
           IColumn.instance_methods(false).include?(:comment).should be_true
         end
 
-        it "should have method 'foreign_table' defined" do
-          IColumn.instance_methods(false).include?(:foreign_table).should be_true
-        end
-
-        it "should have method 'foreign_column' defined" do
-          IColumn.instance_methods(false).include?(:foreign_column).should be_true
+        it "should have method 'references' defined" do
+          IColumn.instance_methods(false).include?(:references).should be_true
         end
 
       end

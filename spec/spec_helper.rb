@@ -2,6 +2,7 @@ $LOAD_PATH.unshift File.expand_path('lib')
 $LOAD_PATH.unshift File.expand_path('lib/r_dia_tool')
 $LOAD_PATH.unshift File.expand_path('lib/r_dia_tool/database')
 
+require 'pp'
 require 'nokogiri'
 require 'dia_tool'
 require 'dia_parser'

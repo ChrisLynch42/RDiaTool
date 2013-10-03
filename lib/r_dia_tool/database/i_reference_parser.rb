@@ -5,13 +5,12 @@ module RDiaTool
   module Database
     module IReferenceParser
 
-      attr_accessor :start_point, :end_point, :xpath_query
+      attr_accessor :start_point, :end_point, :id
 
 
       def set_up() 
         self.start_point = ReferenceConnectionPoint.new()
         self.end_point = ReferenceConnectionPoint.new()
-        self.xpath_query="./dia:connections/dia:connection"
       end
 
       def parse(target_node)
@@ -19,7 +18,13 @@ module RDiaTool
           super(target_node)
         end
         set_up()
-        found_nodes = target_node.xpath(xpath_query)
+        @id = target_node.attr('id').to_s
+        parse_endpoints(target_node)
+      end
+
+      def parse_endpoints(target_node)
+        connection_xpath = "./dia:connections/dia:connection"
+        found_nodes = target_node.xpath(connection_xpath)
         if !found_nodes.nil?
           found_nodes.each { | side |
             if !side.nil?

@@ -17,10 +17,9 @@ module RDiaTool
       def database
         @tables_by_name=Hash.new()
         @tables_by_id=Hash.new()
-        @references_by_origin=Hash.new()
-        @references_by_target=Hash.new()
+        @references=Hash.new()
         parse()
-        @database_object = DatabaseObject.new(@tables_by_name,@tables_by_id,@references_by_origin,@references_by_target)
+        @database_object = DatabaseObject.new(@tables_by_name,@tables_by_id,@references)
       end
 
       def table
@@ -50,12 +49,7 @@ module RDiaTool
             reference_parser_object=reference_parser.new()
             reference_parser_object.parse(reference_node)
             if !reference_parser_object.nil?
-              if !reference_parser_object.start_point.nil?
-                @references_by_origin[reference_parser_object.start_point.target_object_id] =  reference_parser_object
-              end
-              if !reference_parser_object.end_point.nil?
-                @references_by_target[reference_parser_object.end_point.target_object_id] =  reference_parser_object
-              end
+               @references[reference_parser_object.id] =  reference_parser_object
             end
           end
         end

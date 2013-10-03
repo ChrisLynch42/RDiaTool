@@ -110,6 +110,19 @@ module RDiaTool
               @template_controller.database_difference.create.class.to_s.should == 'Hash'
             end
 
+            describe "@template_controller.database_difference.database" do
+
+
+              it "should return 'column' when it recieves the 'tables_by_name[column_set].columns[column_id].foreign_table" do
+                @template_controller.database_difference.database.tables_by_name['column_set'].columns['column_id'].foreign_table.should == 'column'
+              end
+
+              it "should return 'id' when it recieves the 'tables_by_name[column_set].columns[column_id].foreign_column" do
+                @template_controller.database_difference.database.tables_by_name['column_set'].columns['column_id'].foreign_column.should == 'id'
+              end              
+
+            end
+
             describe "@template_controller.database_difference.create" do
               it "should a size of 2" do
                 @template_controller.database_difference.create.length.should == 2
@@ -140,8 +153,8 @@ module RDiaTool
                   @template_controller.database_difference.create['column_set'].add()['column_id'].should_not be_nil
                 end 
 
-                it "should return 'Reference' when 'add()['column_id'].data_type' is called " do
-                  @template_controller.database_difference.create['column_set'].add()['column_id'].data_type.should == 'belongs_to'
+                it "should return 'Reference' when 'add()['column_id'].foreign_table' is called " do
+                  @template_controller.database_difference.create['column_set'].add()['column_id'].foreign_table.should == 'column'
                 end 
 
                 it "should return 'integer' when 'add()['set_id'].data_type' is called " do
@@ -219,6 +232,7 @@ module RDiaTool
             it "should return a hash when it receives the 'change' message" do
               @template_controller.database_difference.change.class.to_s.should == 'Hash'
             end
+
             describe "@template_controller.database_difference.change" do
               it "should a size of 2" do
                 @template_controller.database_difference.change.length.should == 1

@@ -413,10 +413,10 @@
         <dia:real val="0.5"/>
       </dia:attribute>
       <dia:attribute name="start_point_desc">
-        <dia:string>#1#</dia:string>
+        <dia:string>#many#</dia:string>
       </dia:attribute>
       <dia:attribute name="end_point_desc">
-        <dia:string>#many#</dia:string>
+        <dia:string>#1#</dia:string>
       </dia:attribute>
       <dia:attribute name="normal_font">
         <dia:font family="monospace" style="0" name="Courier"/>

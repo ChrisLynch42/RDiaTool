@@ -3,20 +3,19 @@ module RDiaTool
     class DatabaseObject
       include RDiaTool::Database::TypeEnum
       
-      attr_reader :tables_by_name, :tables_by_id, :references_by_origin, :references_by_target
+      attr_reader :tables_by_name, :tables_by_id, :references
 
 
-      def initialize(tables_by_name,tables_by_id,references_by_origin,references_by_target)
+      def initialize(tables_by_name,tables_by_id,references)
         @tables_by_name=tables_by_name
         @tables_by_id=tables_by_id
-        @references_by_origin=references_by_origin
-        @references_by_target=references_by_target
+        @references=references
         set_reference_names()
       end
 
 
       def set_reference_names
-        @references_by_origin.each do | key, reference |
+        @references.each do | key, reference |
           reference.start_point.table_name=get_point_table_name(reference.start_point)
           reference.start_point.column_name=get_point_column_name(reference.start_point)
           reference.end_point.table_name=get_point_table_name(reference.end_point)
