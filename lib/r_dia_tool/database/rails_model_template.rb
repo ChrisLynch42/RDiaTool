@@ -54,10 +54,13 @@ module RDiaTool
         if destination_dir.nil?
           destination_dir=@target_directory
         end
+        write_template_results(destination_dir + '/' + target_name,erb_output(template_name,template_variables))         
+      end
+
+      def erb_output(template_name,template_variables=Hash.new())
         template_content = load_template(template_name)
         template = ERB.new(template_content)
         template_results = template.result(binding)
-        write_template_results(destination_dir + '/' + target_name,template_results)         
       end
 
       def load_template(template_name)

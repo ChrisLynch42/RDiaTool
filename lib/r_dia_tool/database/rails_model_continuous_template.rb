@@ -11,10 +11,8 @@ module RDiaTool
             Dir.glob(@base_directory + "/migration*create.erb").each do | file_name |
               current_date = Time.now().strftime("%Y%m%d%H")
               run_erb(file_name,current_date + ' _create_' + key + '.rb', template_variables,@migrate_directory)
-            end
-            Dir.glob(@base_directory + "/model*create.erb").each do | file_name |
-              run_erb(file_name, key + '.rb', template_variables,@model_directory)
-            end            
+            end 
+            modify_models(key,change, template_variables)           
           end
 
         end
@@ -28,6 +26,22 @@ module RDiaTool
                 run_erb(file_name,current_date + ' _change_' + table_name + '.rb', template_variables,@migrate_directory)
               end
             end
+          end
+        end
+      end
+
+      def modify_models(table_name, table_change, template_variables)
+        model_file_name = table_name + ".rb"
+        if File.exist?(@model_directory + "/" + model_file_name)
+          Dir.glob(@base_directory + "/model_change.erb").each do | file_name |
+            change = erb_output(file_name,template_variables)
+            existing_content = load_template(@model_directory + '/' + table_name + '.rb')
+            existing_content.sub!(/^\s*###Do not edit the below.*###Do not edit the above[ \S]*$/m,change)
+            write_template_results(@model_directory + '/' + table_name + '.rb',existing_content)
+          end
+        else
+          Dir.glob(@base_directory + "/model_create.erb").each do | file_name |
+            run_erb(file_name, table_name + '.rb', template_variables,@model_directory)
           end
         end
       end

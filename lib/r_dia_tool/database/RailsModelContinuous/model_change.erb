@@ -1,0 +1,16 @@
+<%
+  _erbout << "  ###Do not edit the below \n"
+  _erbout << "  ###Begin RDiaTool Code \n"
+  attributes = '  attr_accessible '
+
+  template_variables['database'].tables_by_name[template_variables['table_name']].columns().each do | key, value|
+    if key.upcase() != 'ID'
+      attributes << ' :' 
+      attributes << key
+      attributes << ', ' 
+    end
+  end
+  _erbout << attributes[0..-3]
+  _erbout << "\n"
+  _erbout << "  ###Do not edit the above \n"
+%>
