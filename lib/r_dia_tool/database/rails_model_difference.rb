@@ -26,9 +26,8 @@ module RDiaTool
 
       private
       def reference_relationships
-        database.references_by_origin.each do | key, reference |
-          @database.tables_by_name[database.tables_by_id[key].name].columns[reference.start_point.column_name].foreign_table=reference.end_point.table_name
-          @database.tables_by_name[database.tables_by_id[key].name].columns[reference.start_point.column_name].foreign_column=reference.end_point.column_name
+        database.references.each do | key, reference |
+          @database.tables_by_name[reference.start_point.table_name].columns[reference.start_point.column_name].references[key]=reference
         end
       end
 

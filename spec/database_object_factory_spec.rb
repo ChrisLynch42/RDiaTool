@@ -69,13 +69,10 @@ module RDiaTool
           end
 
 
-          it "references_by_origin should not be nil" do
-            @database_object.references_by_origin.should_not be_nil
+          it "references should not be nil" do
+            @database_object.references.should_not be_nil
           end
 
-          it "references_by_target should not be nil" do
-            @database_object.references_by_target.should_not be_nil
-          end
 
           it "tables_by_name should be a Hash" do
             @database_object.tables_by_name.class.name.should == "Hash"
@@ -87,14 +84,10 @@ module RDiaTool
 
 
 
-          it "references_by_origin should be a Hash" do
-            @database_object.references_by_origin.class.name.should == "Hash"
+          it "references should be a Hash" do
+            @database_object.references.class.name.should == "Hash"
           end
 
-          it "references_by_target should be a Hash" do
-            @database_object.references_by_target.class.name.should == "Hash"
-          end
-          
 
           it "tables_by_name.size should be 2" do
             @database_object.tables_by_name.size.should == 2
@@ -105,29 +98,26 @@ module RDiaTool
           end
 
 
-          it "references_by_origin.size should be 2" do
-            @database_object.references_by_origin.size.should == 1
+          it "references.size should be 2" do
+            @database_object.references.size.should == 1
           end
 
-          it "references_by_target.size should be 2" do
-            @database_object.references_by_target.size.should == 1
-          end
 
-          it "get_point_table_name(references_by_origin[O0]) should return 'column_set'" do
-            point = @database_object.references_by_origin['O0'].start_point
+          it "get_point_table_name(references[O2]) should return 'column_set'" do
+            point = @database_object.references['O2'].start_point
             table_name = @database_object.get_point_table_name(point)
             table_name.should == 'column_set'
           end
 
-           it "get_point_column_name(references_by_origin[O0]) should return 'column_id'" do
-            point = @database_object.references_by_origin['O0'].start_point
+           it "get_point_column_name(references[O2]) should return 'column_id'" do
+            point = @database_object.references['O2'].start_point
             column_name = @database_object.get_point_column_name(point)
             column_name.should == 'column_id'
           end
 
            it "set_reference_names should set names for all references" do
              @database_object.set_reference_names()
-             point = @database_object.references_by_origin['O0'].start_point
+             point = @database_object.references['O2'].start_point
              point.table_name.should == 'column_set'
              point.column_name.should == 'column_id'
           end

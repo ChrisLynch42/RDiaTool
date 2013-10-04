@@ -113,13 +113,9 @@ module RDiaTool
             describe "@template_controller.database_difference.database" do
 
 
-              it "should return 'column' when it recieves the 'tables_by_name[column_set].columns[column_id].foreign_table" do
-                @template_controller.database_difference.database.tables_by_name['column_set'].columns['column_id'].foreign_table.should == 'column'
+              it "should return '1' when it recieves the 'tables_by_name[column_set].columns[column_id].references.length" do
+                @template_controller.database_difference.database.tables_by_name['column_set'].columns['column_id'].references.length.should == 1
               end
-
-              it "should return 'id' when it recieves the 'tables_by_name[column_set].columns[column_id].foreign_column" do
-                @template_controller.database_difference.database.tables_by_name['column_set'].columns['column_id'].foreign_column.should == 'id'
-              end              
 
             end
 
@@ -153,8 +149,8 @@ module RDiaTool
                   @template_controller.database_difference.create['column_set'].add()['column_id'].should_not be_nil
                 end 
 
-                it "should return 'Reference' when 'add()['column_id'].foreign_table' is called " do
-                  @template_controller.database_difference.create['column_set'].add()['column_id'].foreign_table.should == 'column'
+                it "should return 'column' when 'add()['column_id'].references[O2].end_point.table_name' is called " do
+                  @template_controller.database_difference.create['column_set'].add()['column_id'].references['O2'].end_point.table_name.should == 'column'
                 end 
 
                 it "should return 'integer' when 'add()['set_id'].data_type' is called " do
