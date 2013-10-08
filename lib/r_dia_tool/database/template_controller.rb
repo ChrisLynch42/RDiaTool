@@ -10,7 +10,7 @@ module RDiaTool
       attr_accessor :database_configuration
 
       def initialize(dia_xml,options)
-        @template=options[:template]
+        @template=options[:model] + 'Model'
         @dia_xml=dia_xml
         @target_directory=options[:target_dir]
         @options=options

@@ -52,7 +52,7 @@ module RDiaTool
             FileUtils.cp(database_file,@temp_database)
             database_file= @temp_database + '/' + file_name
             database_config= { 'adapter' => 'sqlite3', 'database' => database_file}
-            options = {:rails_dir => nil, :target_dir => @template_dir, :template => 'RailsModel' }            
+            options = {:rails_dir => nil, :model => 'Rails' }            
             @template_controller = RDiaTool::Database::TemplateController.new(dia_xml,options)
             @template_controller.database_configuration=database_config
           end
@@ -70,10 +70,6 @@ module RDiaTool
             @template_controller.database_connected?().should be_true
           end
 
-          it "it should return true when it receives the 'instantiate_template' message" do
-            @template_controller.instantiate_template().should be_true
-          end
-
           it "database_configuration should not be nil" do
             @template_controller.dia_xml.should_not be_nil
           end
@@ -84,11 +80,6 @@ module RDiaTool
 
           it "template should not be nil" do
             @template_controller.template.should_not be_nil
-          end
-
-          it "template_instance should not be nil" do
-            @template_controller.instantiate_template()
-            @template_controller.template_instance.should_not be_nil
           end
 
           it "database_difference should not be nil" do
@@ -166,20 +157,6 @@ module RDiaTool
                 end
               end
 
-              describe "@template_controller.execute_template()" do
-                before(:each) do
-                  @template_controller.execute_template()
-                end
-
-                after(:each) do
-                  FileUtils.rm_rf(Dir.glob(@template_dir + '/*'))
-                end
-                it "should create 'table_create*.sh' file" do
-                  Dir.glob(@template_dir + "/tables_create*.sh").empty?().should be_false
-                end
-
-              end 
-
             end
 
           end
@@ -198,7 +175,7 @@ module RDiaTool
             FileUtils.cp(database_file,@temp_database)
             database_file= @temp_database + '/' + file_name
             database_config= { 'adapter' => 'sqlite3', 'database' => database_file}
-            options = {:rails_dir => nil, :target_dir => @template_dir, :template => 'RailsModel' }            
+            options = {:rails_dir => nil, :model => 'Rails' }            
             @template_controller = RDiaTool::Database::TemplateController.new(dia_xml,options)
             @template_controller.database_configuration=database_config
           end
@@ -248,81 +225,11 @@ module RDiaTool
                 @template_controller.database_difference.change['column_set'].modify().length.should == 1
               end             
               
-              describe "@template_controller.execute_template()" do
-                before(:each) do
-                  @template_controller.execute_template()
-                end
-
-                after(:each) do
-                  FileUtils.rm_rf(Dir.glob(@template_dir + '/*'))
-                end
-                it "should create 'tables_add_remove_command_line*.sh' file" do
-                  Dir.glob(@template_dir + "/tables_add_remove_command_line*.sh").empty?().should be_false
-                end
-                it "should create 'tables_create_command_line*.sh' file" do
-                  Dir.glob(@template_dir + "/tables_add_remove_command_line*.sh").empty?().should be_false
-                end
-                it "should create 'tables_migration_change*.sh' file" do
-                  Dir.glob(@template_dir + "/tables_migration_change*.sh").empty?().should be_false
-                end                
-              end 
             end
           end          
 
         end
-        describe "Work with RailsModel project" do
-          before(:each) do
-            dia_xml=loadTestXML()
-            base_dir=File.dirname(__FILE__)
-            @temp_rails=base_dir + "/temp_rails"
-            @rails_dir=base_dir + "/test_rails"
-            unless FileTest::directory?(@temp_rails)
-              Dir::mkdir(@temp_rails)
-            end
-            @template_dir=base_dir + "/template_test"
-            unless FileTest::directory?(@template_dir)
-              Dir::mkdir(@template_dir)
-            end
-            
-
-            FileUtils.cp_r(Dir.glob(@rails_dir + '/*'),@temp_rails, :remove_destination => true)
-            @temp_rails = @temp_rails + '/TestRails'
-            options = {:rails_dir => @temp_rails, :target_dir => @template_dir, :template => 'RailsModel' }
-            @template_controller = RDiaTool::Database::TemplateController.new(dia_xml,options)
-          end
-
-          after(:each) do
-            FileUtils.rm_rf(@temp_rails)
-          end
-
-          it "@template_controller should not return nil when 'database_configuration' is called" do
-            @template_controller.database_configuration.should_not be_nil
-          end
-
-          it "@template_controller.database_configuration should not return nil when '[development]' is called" do
-            @template_controller.database_configuration['development'].should_not be_nil
-          end
-
-          it "@template_controller.database_configuration[development] should not return nil when '[database]' is called" do
-            @template_controller.database_configuration['development']['database'].should_not be_nil
-          end          
-
-          describe "@template_controller.execute_template()" do
-            before(:each) do
-              @template_controller.execute_template()
-            end
-
-            after(:each) do
-              FileUtils.rm_rf(Dir.glob(@template_dir + '/*'))
-            end
-            
-            it "should create 'table_create*.sh' file" do
-              Dir.glob(@template_dir + "/tables_create*.sh").empty?().should be_false
-            end
-
-          end
-        end        
-        describe "Work with RailsModelContinuous project to create tables" do
+        describe "Work with Rails project to create tables" do
           before(:each) do
             dia_xml=loadTestXML()
             base_dir=File.dirname(__FILE__)
@@ -337,13 +244,23 @@ module RDiaTool
 
             FileUtils.cp_r(Dir.glob(@rails_dir + '/*'),@temp_rails, :remove_destination => true)
             @temp_rails = @temp_rails + '/TestRails'
-            options = {:rails_dir => @temp_rails, :template => 'RailsModelContinuous' }
+            options = {:rails_dir => @temp_rails, :model => 'Rails' }
             @template_controller = RDiaTool::Database::TemplateController.new(dia_xml,options)
           end
 
           after(:each) do
             #FileUtils.rm_rf(@temp_rails)
           end
+
+          it "it should return true when it receives the 'instantiate_template' message" do
+            @template_controller.instantiate_template().should be_true
+          end
+
+          it "template_instance should not be nil" do
+            @template_controller.instantiate_template()
+            @template_controller.template_instance.should_not be_nil
+          end          
+
           it "@template_controller should not return nil when 'database_configuration' is called" do
             @template_controller.database_configuration.should_not be_nil
           end
@@ -378,7 +295,7 @@ module RDiaTool
 
         end
 
-        describe "Work with RailsModelContinuous project to change tables" do
+        describe "Work with Rails project to change tables" do
           before(:each) do
             dia_xml=loadTestXML()
             base_dir=File.dirname(__FILE__)
@@ -394,7 +311,7 @@ module RDiaTool
             FileUtils.cp_r(Dir.glob(@rails_dir + '/*'),@temp_rails, :remove_destination => true)
             @temp_rails = @temp_rails + '/TestRails'
             FileUtils.cp(@database_dir + '/change.sqlite3',@temp_rails + '/db/development.sqlite3')
-            options = {:rails_dir => @temp_rails, :template => 'RailsModelContinuous' }
+            options = {:rails_dir => @temp_rails, :model => 'Rails' }
             @template_controller = RDiaTool::Database::TemplateController.new(dia_xml,options)
             open(@model_dir + "/column.rb", 'a') { |f|
               f.puts "\n###modified"

@@ -22,10 +22,9 @@ require 'database_object'
 require 'database_object_factory'
 require 'template_controller'
 require 'rails_model_template'
-require 'rails_model_continuous_template'
+require 'rails_master_slave_template'
 require 'i_database_difference'
 require 'rails_model_difference'
-require 'rails_model_continuous_difference'
 require 'database_change'
 
 

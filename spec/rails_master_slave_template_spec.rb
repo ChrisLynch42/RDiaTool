@@ -3,7 +3,7 @@ require 'spec_helper'
 module RDiaTool
   module Database
 
-    describe RailsModelContinuousDifference do
+    describe RailsMasterSlaveTemplate do
 
       describe "Class" do
       end
