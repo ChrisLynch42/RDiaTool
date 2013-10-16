@@ -103,6 +103,9 @@ module RDiaTool
 
             describe "@template_controller.database_difference.database" do
 
+              it "should return '27' when it recieves the 'tables_by_name.length" do
+                @template_controller.database_difference.database.tables_by_name.length.should == 27
+              end
 
               it "should return '1' when it recieves the 'tables_by_name[column_set].columns[column_id].references.length" do
                 @template_controller.database_difference.database.tables_by_name['column_set'].columns['column_id'].references.length.should == 1
@@ -111,8 +114,8 @@ module RDiaTool
             end
 
             describe "@template_controller.database_difference.create" do
-              it "should a size of 2" do
-                @template_controller.database_difference.create.length.should == 2
+              it "should a size of 27" do
+                @template_controller.database_difference.create.length.should == 27
               end
 
               it "should contain a key of 'column_set'" do

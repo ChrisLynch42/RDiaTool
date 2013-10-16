@@ -89,17 +89,17 @@ module RDiaTool
           end
 
 
-          it "tables_by_name.size should be 2" do
-            @database_object.tables_by_name.size.should == 2
+          it "tables_by_name.size should be 27" do
+            @database_object.tables_by_name.size.should == 27
           end
 
-          it "tables_by_id.size should be 2" do
-            @database_object.tables_by_id.size.should == 2
+          it "tables_by_id.size should be 27" do
+            @database_object.tables_by_id.size.should == 27
           end
 
 
-          it "references.size should be 2" do
-            @database_object.references.size.should == 1
+          it "references.size should be 28" do
+            @database_object.references.size.should == 28
           end
 
 

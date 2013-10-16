@@ -1,5 +1,6 @@
 require 'active_record'
 require 'rails_model_template'
+require 'rails_model_difference'
 require 'i_database_difference'
 
 module RDiaTool
@@ -12,7 +13,6 @@ module RDiaTool
       def initialize(dia_xml,options)
         @template=options[:model] + 'Model'
         @dia_xml=dia_xml
-        @target_directory=options[:target_dir]
         @options=options
         unless @options.nil? || @options.kind_of?(Hash)
           raise Exception.new("Options is not a hash")
@@ -27,7 +27,6 @@ module RDiaTool
             @database_configuration = YAML.load(File.read(config_file))
           end          
         end
-        
 #        unless database_configuration.nil? || database_configuration.kind_of?(Hash)
 #          raise Exception.new("database configuration is not a hash")
 #        end

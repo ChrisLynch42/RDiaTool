@@ -1,10 +1,11 @@
 require 'dia_parser'
 require 'rubygems'
 require 'thor'
+require 'template_controller'
 
 class DiaTool < Thor
   
-  TEMPLATES = ['RailsModel']
+  TEMPLATES = ['MasterSlave']
 
 
   desc "model_generate FILE", "Generate code files from a Dia database diagram."
@@ -12,33 +13,43 @@ class DiaTool < Thor
   method_option :template, :aliases => "-t", :type => :string, :required => true, :desc => "This is the template used to generate the source code for views and controllers.  Currently only 'MasterSlave' template is available."
   ####### There is a default method_option called :model which will always be Rails for now.
   def database_generate(dia_database_diagram)
-    options[:model]='Rails'
+    application_options = options.to_hash()
+    application_options[:model]='Rails'
     has_error=false
-    unless dia_database_diagram.nil? || File.exist?(dia_database_diagram)
-      puts "Dia database diagram does not exist"
+    dia_database_diagram = File.expand_path(dia_database_diagram)    
+    unless File.exist?(dia_database_diagram)
+      say "Dia database diagram does not exist", :red
       has_error=true
-    else
-      dia_database_diagram = File.expand_path(dia_database_diagram)
     end
     unless options[:rails_dir].nil? || Dir.exist?(options[:rails_dir])
-      puts "Rails directory does not exist"
+      say "Rails directory does not exist", :red
       has_error=true
     else
-      options[:rails_dir] = File.expand_path(options[:rails_dir])
+      application_options[:rails_dir] = File.expand_path(options[:rails_dir])
     end
     if options[:template].nil?
-      puts "You must select a template using --template"      
+      say "You must select a template using --template", :red
       has_error=true
     else
       unless TEMPLATES.include?(options[:template])
-        puts "You have not selected a valid template.  'MasterSlave' is the only valid template."
+        say "You have not selected a valid template.  'MasterSlave' is the only valid template.", :red
         has_error=true
       end
     end
     if has_error
      return
     else
-      #instantiate template controller
+      f = nil
+      begin
+        f = File.open(dia_database_diagram)
+        dia_xml = Nokogiri::XML(f)
+      rescue
+        say "Error reading database diagram", :red
+      ensure
+        f.close()
+      end
+      template_controller = RDiaTool::Database::TemplateController.new(dia_xml,application_options)
+      template_controller.instantiate_template()
     end
   end
 end
