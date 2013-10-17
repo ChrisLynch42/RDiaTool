@@ -16,10 +16,26 @@ module RDiaTool
 
       def set_reference_names
         @references.each do | key, reference |
-          reference.start_point.table_name=get_point_table_name(reference.start_point)
-          reference.start_point.column_name=get_point_column_name(reference.start_point)
-          reference.end_point.table_name=get_point_table_name(reference.end_point)
-          reference.end_point.column_name=get_point_column_name(reference.end_point)
+          if reference.start_point.nil? || reference.start_point.target_object_id.nil? || reference.end_point.nil? || reference.end_point.target_object_id.nil?
+            message = "------------------------\n"
+            message = message + "A reference is missing an end point.\n"
+            message = message + "key object id=#{key}.\n"
+            message = message + "reference object id=#{reference.id}.\n"
+            unless reference.start_point.nil? || reference.start_point.target_object_id.nil?              
+              message = message + "The start point references table #{@tables_by_id[reference.start_point.target_object_id].name}.\n"
+            end
+            unless reference.end_point.nil? || reference.end_point.target_object_id.nil?
+              message = message + "The end point references table #{@tables_by_id[reference.end_point.target_object_id].name}. table object id=#{reference.end_point.target_object_id}\n"
+            end
+            message = message + "Removing reference from database.\n"
+            @references.delete(key)
+            raise message
+          else
+            reference.start_point.table_name=get_point_table_name(reference.start_point)
+            reference.start_point.column_name=get_point_column_name(reference.start_point)
+            reference.end_point.table_name=get_point_table_name(reference.end_point)
+            reference.end_point.column_name=get_point_column_name(reference.end_point)
+          end
         end
       end
 

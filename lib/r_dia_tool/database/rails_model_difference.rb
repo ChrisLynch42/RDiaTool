@@ -29,17 +29,13 @@ module RDiaTool
         database.references.each do | key, reference |
           begin
             @database.tables_by_name[reference.start_point.table_name].columns[reference.start_point.column_name].references[key]=reference
-          rescue => error
-            puts '-------------------------'
-            print 'key='
-            puts key
-            print 'reference.start_point.table_name='
-            puts reference.start_point.table_name
-            print 'reference.start_point.target_object_id='
-            puts reference.start_point.target_object_id
-            puts '-------------------------'
-            puts error.message
-            puts error.backtrace
+          rescue => error           
+            addendum =  "-------------------------\nkey=" + key + "\n"
+            addendum = addendum +  "reference.start_point.table_name=" + reference.start_point.table_name + "\n"
+            addendum = addendum +  "reference.start_point.target_object_id=" +  reference.start_point.target_object_id + "\n"
+            addendum =  addendum +  "-------------------------\n"
+            error.message = error.message + addendum
+            throw error            
           end
         end
       end

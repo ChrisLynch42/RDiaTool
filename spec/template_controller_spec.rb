@@ -103,6 +103,18 @@ module RDiaTool
 
             describe "@template_controller.database_difference.database" do
 
+              it "should return '28' when it recieves the 'references.length" do
+                @template_controller.database_difference.database.references.length.should == 28
+              end
+
+              it "should return 'O37' when it recieves the 'references[O39].start_point.target_object_id" do
+                @template_controller.database_difference.database.references['O39'].start_point.target_object_id.should == 'O37'
+              end
+
+              it "should return 'O3' when it recieves the 'references[O39].end_point.target_object_id" do
+                @template_controller.database_difference.database.references['O39'].end_point.target_object_id.should == 'O3'
+              end
+
               it "should return '27' when it recieves the 'tables_by_name.length" do
                 @template_controller.database_difference.database.tables_by_name.length.should == 27
               end

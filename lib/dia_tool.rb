@@ -48,8 +48,20 @@ class DiaTool < Thor
       ensure
         f.close()
       end
-      template_controller = RDiaTool::Database::TemplateController.new(dia_xml,application_options)
-      template_controller.instantiate_template()
+      begin
+        template_controller = RDiaTool::Database::TemplateController.new(dia_xml,application_options)
+        template_controller.instantiate_template()
+      rescue => error
+        say 'Internal RDiaTool Error', :red
+        say '-------------------------', :red
+        say error.message, :red
+        unless error.backtrace.nil?
+          error.backtrace.each do | line |
+            say line, :red
+          end
+        end
+
+      end
     end
   end
 end
