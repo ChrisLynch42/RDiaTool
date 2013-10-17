@@ -1,4 +1,5 @@
 require 'nokogiri'
+require 'erb'
 
 module RDiaTool
   module Database

@@ -31,8 +31,8 @@ module RDiaTool
           creations.each do | key, change |
             template_variables = { 'table_name' => key, 'table_change' => change, 'database' => @database_difference.database }
             Dir.glob(@base_directory + "/migration*create.erb").each do | file_name |
-              current_date = Time.now().strftime("%Y%m%d%H")
-              run_erb(file_name,current_date + ' _create_' + key + '.rb', template_variables,@migrate_directory)
+              current_date = get_time_marker()
+              run_erb(file_name,current_date + '_create_' + key.underscore + '.rb', template_variables,@migrate_directory)
             end 
             modify_models(key,change, template_variables)           
           end
@@ -44,13 +44,17 @@ module RDiaTool
             unless (table_change.add().nil?  || table_change.add().length < 1) && (table_change.remove().nil?  || table_change.remove().length < 1)
               template_variables = { 'table_name' => table_name, 'table_change' => table_change, 'database' => @database_difference.database  }
               Dir.glob(@base_directory + "/migration*change.erb").each do | file_name |
-                current_date = Time.now().strftime("%Y%m%d%H")
-                run_erb(file_name,current_date + ' _change_' + table_name + '.rb', template_variables,@migrate_directory)
+                current_date = get_time_marker()
+                run_erb(file_name,current_date + '_change_' + table_name.underscore + '.rb', template_variables,@migrate_directory)
               end
               modify_models(table_name,table_change, template_variables)           
             end
           end
         end
+      end
+
+      def get_time_marker
+        Time.now().strftime("%Y%m%d%H%M%S%L%N")
       end
 
       def modify_models(table_name, table_change, template_variables)

@@ -107,12 +107,12 @@ module RDiaTool
                 @template_controller.database_difference.database.references.length.should == 28
               end
 
-              it "should return 'O37' when it recieves the 'references[O39].start_point.target_object_id" do
-                @template_controller.database_difference.database.references['O39'].start_point.target_object_id.should == 'O37'
+              it "should return 'O3' when it recieves the 'references[O50].start_point.target_object_id" do
+                @template_controller.database_difference.database.references['O50'].start_point.target_object_id.should == 'O3'
               end
 
-              it "should return 'O3' when it recieves the 'references[O39].end_point.target_object_id" do
-                @template_controller.database_difference.database.references['O39'].end_point.target_object_id.should == 'O3'
+              it "should return 'O48' when it recieves the 'references[O50].end_point.target_object_id" do
+                @template_controller.database_difference.database.references['O50'].end_point.target_object_id.should == 'O48'
               end
 
               it "should return '27' when it recieves the 'tables_by_name.length" do
@@ -343,7 +343,7 @@ module RDiaTool
           end
 
           after(:each) do
-            #FileUtils.rm_rf(@temp_rails)
+            FileUtils.rm_rf(@temp_rails)
           end
 
           describe "@template_controller.execute_template()" do

@@ -1,10 +1,10 @@
 <% 
     _erbout << 'class Create'
-    _erbout << template_variables['table_name'].capitalize
+    _erbout << template_variables['table_name'].camelize
     _erbout << " < ActiveRecord::Migration\n"
     _erbout << "  def change\n"
     _erbout << "    create_table"
-    _erbout << " :" + template_variables['table_name']
+    _erbout << " :" + template_variables['table_name'].underscore
     _erbout << " do | t |\n"
     template_variables['table_change'].add().each do | key, value|
       if key.upcase() != 'ID'
