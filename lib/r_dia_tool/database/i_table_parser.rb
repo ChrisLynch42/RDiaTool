@@ -11,6 +11,7 @@ module RDiaTool
       def set_up() 
         self.columns = Hash.new()
         self.columns_in_order = Array.new()
+        self.references=Hash.new()
       end 
 
 

@@ -8,18 +8,33 @@
       attributes << ' :' 
       attributes << key
       attributes << ', ' 
-      if !value.references.nil? && value.references.length > 0
-        references.merge!(value.references)
-      end      
     end
   end
   _erbout << attributes[0..-3]
   _erbout << "\n"
 
-  references.each do | key, reference |
-    _erbout << ' belongs_to :'    
-    _erbout << reference.end_point.table_name
-    _erbout << "\n"    
+  unless template_variables['belongs_to'][template_variables['table_name']].nil?
+    template_variables['belongs_to'][template_variables['table_name']].each do | belongs_to |   
+      _erbout << "  "
+      _erbout << belongs_to    
+      _erbout << "\n"
+    end
+  end
+
+  unless template_variables['has_many'][template_variables['table_name']].nil?
+    template_variables['has_many'][template_variables['table_name']].each do | has_many |
+      _erbout << "  "
+      _erbout << has_many    
+      _erbout << "\n"
+    end
+  end
+
+  unless template_variables['has_many_through'][template_variables['table_name']].nil?
+    template_variables['has_many_through'][template_variables['table_name']].each do | has_many_through |
+      _erbout << "  "
+      _erbout << has_many_through    
+      _erbout << "\n"
+    end  
   end
 
   _erbout << "  ###Do not edit the above \n"

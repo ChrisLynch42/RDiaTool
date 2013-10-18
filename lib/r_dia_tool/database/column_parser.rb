@@ -17,7 +17,6 @@ module RDiaTool
         self.primary_key = get_dia_boolean(target_node,'primary_key')
         self.nullable = get_dia_boolean(target_node,'nullable')
         self.unique = get_dia_boolean(target_node,'unique')
-        self.references=Hash.new()
 
       end
 

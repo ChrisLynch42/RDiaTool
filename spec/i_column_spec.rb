@@ -26,10 +26,6 @@ module RDiaTool
           IColumn.instance_methods(false).include?(:comment).should be_true
         end
 
-        it "should have method 'references' defined" do
-          IColumn.instance_methods(false).include?(:references).should be_true
-        end
-
       end
 
 

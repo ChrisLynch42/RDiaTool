@@ -119,9 +119,12 @@ module RDiaTool
                 @template_controller.database_difference.database.tables_by_name.length.should == 27
               end
 
-              it "should return '1' when it recieves the 'tables_by_name[column_set].columns[column_id].references.length" do
-                @template_controller.database_difference.database.tables_by_name['column_set'].columns['column_id'].references.length.should == 1
+              it "should return '1' when it recieves the 'tables_by_name[column_set].references.length" do
+                @template_controller.database_difference.database.tables_by_name['column'].references.length.should == 1
               end
+
+              it "should return '2' when it recieves the 'tables_by_name[scenarios_characters].references.length" do
+                @template_controller.database_difference.database.tables_by_name['scenarios_characters'].references.length.should == 2              end
 
             end
 
@@ -153,10 +156,6 @@ module RDiaTool
 
                 it "should not return nil when 'add()[column_id]' is called " do
                   @template_controller.database_difference.create['column_set'].add()['column_id'].should_not be_nil
-                end 
-
-                it "should return 'column' when 'add()['column_id'].references[O2].end_point.table_name' is called " do
-                  @template_controller.database_difference.create['column_set'].add()['column_id'].references['O2'].end_point.table_name.should == 'column'
                 end 
 
                 it "should return 'integer' when 'add()['set_id'].data_type' is called " do
@@ -294,6 +293,7 @@ module RDiaTool
               @template_controller.execute_template()
             end
 
+
             it "should create '*create_column.rb' file" do
               Dir.glob(@migration_dir + "/*create_column.rb").empty?().should be_false
             end
@@ -304,6 +304,16 @@ module RDiaTool
 
              it "should create 'column.rb' model file" do
               Dir.glob(@model_dir + "/column.rb").empty?().should be_false
+            end
+
+            describe "@template_controller.template_instance" do
+              it "should return 2 when 'belongs_to[scenarios_characters].length' is called" do
+                 @template_controller.template_instance.belongs_to['scenarios_characters'].length.should == 2
+              end
+
+              it "should return 9 when 'has_many_through[characters].length' is called" do
+                 @template_controller.template_instance.has_many_through['characters'].length.should == 9
+              end              
             end
 
           end          

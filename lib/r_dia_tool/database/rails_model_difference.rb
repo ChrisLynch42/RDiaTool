@@ -31,7 +31,7 @@ module RDiaTool
       def reference_relationships
         database.references.each do | key, reference |
           begin
-            @database.tables_by_name[reference.start_point.table_name].columns[reference.start_point.column_name].references[key]=reference
+            @database.tables_by_name[reference.end_point.table_name].references[key]=reference
           rescue => error           
             addendum =  "-------------------------\nkey=" + key + "\n"
             addendum = addendum +  "reference.start_point.table_name=" + reference.start_point.table_name + "\n"
