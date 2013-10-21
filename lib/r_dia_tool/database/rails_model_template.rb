@@ -82,7 +82,7 @@ module RDiaTool
             if inner_id != id
               inner_table = inner_reference.start_point.table_name
               middle_table = inner_reference.end_point.table_name
-              @has_many_through[outer_table][@has_many_through[outer_table].length] = "has_many :#{inner_table} through: :#{middle_table}"
+              @has_many_through[outer_table][@has_many_through[outer_table].length] = "has_many :#{inner_table}, through: :#{middle_table}"
             end
           end
         end
