@@ -119,11 +119,11 @@ module RDiaTool
             change = erb_output(file_name,template_variables)
             existing_content = load_template(@model_directory + '/' + table_name + '.rb')
             existing_content.sub!(/^\s*###Do not edit the below.*###Do not edit the above[ \S]*$/m,change)
-            write_template_results(@model_directory + '/' + table_name + '.rb',existing_content)
+            write_template_results(@model_directory + '/' + table_name.singularize + '.rb',existing_content)
           end
         else
           Dir.glob(@base_directory + "/model_create.erb").each do | file_name |
-            run_erb(file_name, table_name + '.rb', template_variables,@model_directory)
+            run_erb(file_name, table_name.singularize + '.rb', template_variables,@model_directory)
           end
         end
       end
