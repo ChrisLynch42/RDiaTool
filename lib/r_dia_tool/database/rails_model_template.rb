@@ -93,7 +93,7 @@ module RDiaTool
         table.references.each do | id, reference |
           many_table = reference.end_point.table_name
           one_table = reference.start_point.table_name
-          @belongs_to[many_table][@belongs_to[many_table].length] = "belongs_to :#{one_table}"
+          @belongs_to[many_table][@belongs_to[many_table].length] = "belongs_to :#{one_table.singularize}"
         end
       end
 
