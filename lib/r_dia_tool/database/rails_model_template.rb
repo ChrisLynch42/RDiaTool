@@ -41,6 +41,18 @@ module RDiaTool
           end
 
         end
+        drops = @database_difference.drop()
+        unless drops.nil? || drops.length <  1
+          drops.each do | key, change |
+            template_variables['table_name'] = key
+            Dir.glob(@base_directory + "/migration*drop.erb").each do | file_name |
+              current_date = get_time_marker()
+              run_erb(file_name,current_date + '_drop_' + key.underscore + '.rb', template_variables,@migrate_directory)
+            end 
+          end
+
+        end
+
         changes = @database_difference.change()
         unless changes.nil? || changes.length <  1
           changes.each do | table_name, table_change |

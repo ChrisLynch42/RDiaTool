@@ -22,6 +22,13 @@ module RDiaTool
         @create
       end
 
+      def drop
+        if @drop.nil?
+          @drop = Hash.new()
+        end
+        @drop
+      end
+
       def translation_hash
         if @translation_hash.nil?
           @translation_hash = Hash.new()
@@ -43,6 +50,7 @@ module RDiaTool
       def compare_tables(ignore_columns=Array.new())
         create
         change
+        drop
         set_database()
         set_database_tables()
 
@@ -56,6 +64,12 @@ module RDiaTool
             @create[table_name].add=table_object.columns
           end
         }
+
+        @database_tables.each { | table_name |
+          if !@database.tables_by_name.include?(table_name) && !table_name.upcase().start_with?('SCHEMA') && !table_name.upcase().start_with?('SQLITE')
+            @drop[table_name]=true
+          end
+        }        
       end
 
       def compare_columns(table_design, table_name, ignore_columns=Array.new())

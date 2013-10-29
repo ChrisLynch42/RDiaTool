@@ -1,0 +1,13 @@
+<% 
+    _erbout << 'class Drop'
+    _erbout << template_variables['table_name'].camelize
+    _erbout << " < ActiveRecord::Migration\n"
+    _erbout << "  def change\n"
+    _erbout << "    drop_table"
+    _erbout << " :" + template_variables['table_name'].underscore
+    _erbout << "\n"
+    _erbout << "  end\n"
+    _erbout << "end\n"
+    _erbout << "\n"
+    _erbout << "\n"
+%>

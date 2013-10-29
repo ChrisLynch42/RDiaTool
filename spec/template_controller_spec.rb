@@ -220,6 +220,10 @@ module RDiaTool
               @template_controller.database_difference.change.class.to_s.should == 'Hash'
             end
 
+            it "should return a hash when it receives the 'drop' message" do
+              @template_controller.database_difference.drop.class.to_s.should == 'Hash'
+            end
+
             describe "@template_controller.database_difference.change" do
               it "should a size of 2" do
                 @template_controller.database_difference.change.length.should == 1
@@ -240,6 +244,16 @@ module RDiaTool
               end             
               
             end
+
+            describe "@template_controller.database_difference.drop" do
+              it "should a size of 1" do
+                @template_controller.database_difference.drop.length.should == 1
+              end
+
+              it "should contain a key of 'delete_me'" do
+                @template_controller.database_difference.drop.include?('delete_me').should be_true
+              end              
+            end            
           end          
 
         end
@@ -293,6 +307,11 @@ module RDiaTool
               @template_controller.execute_template()
             end
 
+
+            it "should create '*drop_delete_me.rb' file" do
+              Dir.glob(@migration_dir + "/*drop_delete_me.rb").empty?().should be_false
+            end
+            
 
             it "should create '*create_column.rb' file" do
               Dir.glob(@migration_dir + "/*create_column.rb").empty?().should be_false
