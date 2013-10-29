@@ -6,12 +6,12 @@ module RDiaTool
     class RailsModelTemplate
       include IBasicTemplate
 
-      attr_reader :target_directory, :database_difference, :has_many_through, :has_many, :belongs_to
+      attr_reader :target_directory, :database_difference, :has_many_through, :has_many, :belongs_to, :options
 
 
       def initialize(database_difference,options)
         @database_difference=database_difference
-
+        @options = options
         @base_directory = File.dirname(__FILE__) + "/RailsModel"
         @migrate_directory = options[:rails_dir] + "/db/migrate" 
         unless FileTest::directory?(@migrate_directory)
@@ -66,6 +66,12 @@ module RDiaTool
               modify_models(table_name,table_change, template_variables)           
             end
           end
+        end
+        if @options[:force_model]
+           @database_difference.database.tables_by_name.each do | table_name, table_object |
+             template_variables['table_name'] = table_name
+             modify_models(table_name,table_object, template_variables)
+           end
         end
       end
 
@@ -125,17 +131,17 @@ module RDiaTool
       end
 
       def modify_models(table_name, table_change, template_variables)
-        model_file_name = table_name + ".rb"
+        model_file_name = table_name.singularize + ".rb"
         if File.exist?(@model_directory + "/" + model_file_name)
           Dir.glob(@base_directory + "/model_change.erb").each do | file_name |
             change = erb_output(file_name,template_variables)
-            existing_content = load_template(@model_directory + '/' + table_name + '.rb')
+            existing_content = load_template(@model_directory + '/' + model_file_name)
             existing_content.sub!(/^\s*###Do not edit the below.*###Do not edit the above[ \S]*$/m,change)
-            write_template_results(@model_directory + '/' + table_name.singularize + '.rb',existing_content)
+            write_template_results(@model_directory + '/' + model_file_name,existing_content)
           end
         else
           Dir.glob(@base_directory + "/model_create.erb").each do | file_name |
-            run_erb(file_name, table_name.singularize + '.rb', template_variables,@model_directory)
+            run_erb(file_name, model_file_name, template_variables,@model_directory)
           end
         end
       end

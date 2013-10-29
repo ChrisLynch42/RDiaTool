@@ -11,9 +11,13 @@ class DiaTool < Thor
   desc "model_generate FILE", "Generate code files from a Dia database diagram."
   method_option :rails_dir, :aliases => "-r", :type => :string, :required => true, :desc => "Root directory of a rails application."
   method_option :template, :aliases => "-t", :type => :string, :required => true, :desc => "This is the template used to generate the source code for views and controllers.  Currently only 'MasterSlave' template is available."
+  method_option :force_model, :aliases => "-f", :type => :string, :default => false, :lazy_default => true, :desc => "Force update of models whether or not database has changed."
   ####### There is a default method_option called :model which will always be Rails for now.
   def database_generate(dia_database_diagram)
-    application_options = options.to_hash()
+    application_options = Hash.new()
+    options.each do | key, value |
+      application_options[key.to_sym]=value
+    end
     application_options[:model]='Rails'
     has_error=false
     dia_database_diagram = File.expand_path(dia_database_diagram)    
