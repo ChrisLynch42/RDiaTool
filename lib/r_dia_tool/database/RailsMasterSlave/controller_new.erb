@@ -1,0 +1,16 @@
+<%
+  single = template_variables['table_name'].downcase.singularize
+  plural = template_variables['table_name'].downcase
+  cap_single = template_variables['table_name'].capitalize.singularize
+  cap_plural = template_variables['table_name'].capitalize
+%>
+
+  def new
+    @<%= single %> = <%= cap_single %>.new
+    url_params = { 'letter' => params[:letter] }
+    respond_to do |format|
+      new_html(format, @<%= single %>,url_params)
+      format.json { render json: @<%= single %> }
+    end
+  end
+

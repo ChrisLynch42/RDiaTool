@@ -1,0 +1,44 @@
+<%
+  single = template_variables['table_name'].downcase.singularize
+  plural = template_variables['table_name'].downcase
+  cap_single = template_variables['table_name'].capitalize.singularize
+  cap_plural = template_variables['table_name'].capitalize
+%>
+
+class <%= template_variables['table_name'].capitalize %>Controller < ApplicationController
+
+  <%= erb_output(@base_directory + '/controller_index.erb',template_variables) %>
+
+  <%= erb_output(@base_directory + '/controller_show.erb',template_variables) %>
+
+  <%= erb_output(@base_directory + '/controller_new.erb',template_variables) %>
+
+  <%= erb_output(@base_directory + '/controller_edit.erb',template_variables) %>
+
+  <%= erb_output(@base_directory + '/controller_create.erb',template_variables) %>
+
+  <%= erb_output(@base_directory + '/controller_update.erb',template_variables) %>
+
+  <%= erb_output(@base_directory + '/controller_destroy.erb',template_variables) %>
+ 
+  protected
+
+  def get_first_letter(model)
+    unless model.nil? || model.title.nil? 
+      model.title[0]
+    end
+  end
+
+  def new_html(format, model, url_params=nil)
+    render_new_html(format, model, 'New <%= cap_plural %>', url_params)
+  end
+
+  def edit_html(format, model, url_params=nil)
+    render_edit_html(format, model, '<%= cap_single %>', url_params)
+  end 
+
+  def show_html(format, model, url_params=nil)    
+    render_show_html(format, model, '<%= cap_single %>', url_params)
+  end 
+end
+

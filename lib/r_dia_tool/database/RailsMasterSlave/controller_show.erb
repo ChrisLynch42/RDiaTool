@@ -1,0 +1,16 @@
+<%
+  single = template_variables['table_name'].downcase.singularize
+  plural = template_variables['table_name'].downcase
+  cap_single = template_variables['table_name'].capitalize.singularize
+  cap_plural = template_variables['table_name'].capitalize
+%>
+
+
+  def show
+    @<%= single %> = <%= cap_single %>.find(params[:id])
+    url_params = { 'letter' => get_first_letter(@<%= single %>) }
+    respond_to do |format|
+      show_html(format,@<%= single %>,url_params)
+      format.json { render json: @<%= single %> }
+    end
+  end

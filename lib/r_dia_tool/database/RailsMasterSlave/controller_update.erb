@@ -1,0 +1,21 @@
+<%
+  single = template_variables['table_name'].downcase.singularize
+  plural = template_variables['table_name'].downcase
+  cap_single = template_variables['table_name'].capitalize.singularize
+  cap_plural = template_variables['table_name'].capitalize
+%>
+
+  def update
+    @<%= single %> = <%= cap_single %>.find(params[:id])
+
+    respond_to do |format|
+      if @<%= single %>.update_attributes(params[:<%= single %>])
+        format.html { redirect_to <%= single %>_path(@<%= single %>, :letter => get_first_letter(@<%= single %>) ), notice: '<%= cap_single %> was successfully updated.' }
+        format.json { head :no_content }
+      else
+        edit_html(format,@<%= single %>)
+        format.json { render json: @<%= single %>.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
