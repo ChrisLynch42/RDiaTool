@@ -7,20 +7,42 @@
 
 class <%= template_variables['table_name'].capitalize %>Controller < ApplicationController
 
-  <%= erb_output(@base_directory + '/controller_index.erb',template_variables) %>
 
-  <%= erb_output(@base_directory + '/controller_show.erb',template_variables) %>
+  def index
+    <%= erb_output(@base_directory + '/controller_index_prepare.erb',template_variables) %>
+    <%= erb_output(@base_directory + '/controller_index_send.erb',template_variables) %>
+  end
 
-  <%= erb_output(@base_directory + '/controller_new.erb',template_variables) %>
+  def show
+  <%= erb_output(@base_directory + '/controller_show_prepare.erb',template_variables) %>
+  <%= erb_output(@base_directory + '/controller_show_send.erb',template_variables) %>
+  end
 
-  <%= erb_output(@base_directory + '/controller_edit.erb',template_variables) %>
+  def new
+  <%= erb_output(@base_directory + '/controller_new_prepare.erb',template_variables) %>
+  <%= erb_output(@base_directory + '/controller_new_send.erb',template_variables) %>
+  end
 
-  <%= erb_output(@base_directory + '/controller_create.erb',template_variables) %>
+  def edit
+  <%= erb_output(@base_directory + '/controller_edit_prepare.erb',template_variables) %>
+  <%= erb_output(@base_directory + '/controller_edit_send.erb',template_variables) %>
+  end
 
-  <%= erb_output(@base_directory + '/controller_update.erb',template_variables) %>
+  def create
+  <%= erb_output(@base_directory + '/controller_create_prepare.erb',template_variables) %>
+  <%= erb_output(@base_directory + '/controller_create_send.erb',template_variables) %>
+  end
 
-  <%= erb_output(@base_directory + '/controller_destroy.erb',template_variables) %>
- 
+  def update
+  <%= erb_output(@base_directory + '/controller_update_prepare.erb',template_variables) %>
+  <%= erb_output(@base_directory + '/controller_update_send.erb',template_variables) %>
+  end
+
+  def destroy
+  <%= erb_output(@base_directory + '/controller_destroy_prepare.erb',template_variables) %>
+  <%= erb_output(@base_directory + '/controller_destroy_send.erb',template_variables) %>
+  end
+
   protected
 
   def get_first_letter(model)

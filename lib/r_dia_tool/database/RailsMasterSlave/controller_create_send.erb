@@ -1,4 +1,4 @@
-    @<%= single %> = <%= cap_single %>.new(params[:<%= single %>])
+    <%= prepare_comment_above('SEND CREATE') %>    
 
     respond_to do |format|
       if @<%= single %>.save
@@ -9,3 +9,5 @@
         format.json { render json: @<%= single %>.errors, status: :unprocessable_entity }
       end
     end
+    <%= prepare_comment_below('SEND CREATE') %>    
+

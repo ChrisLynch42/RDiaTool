@@ -1,0 +1,13 @@
+    <%= prepare_comment_above('PREPARE INDEX') %>    
+
+    @letters = <%= cap_single %>.order('1').select("Distinct upper(substr(title,1,1)) AS letter" )
+ 
+    if params[:letter].nil?
+      if @letters.nil? || @letters.length < 1
+        params[:letter] = 'A'
+      else
+        params[:letter] = @letters[0].letter
+      end
+    end
+    <%= prepare_comment_below('PREPARE INDEX') %>    
+

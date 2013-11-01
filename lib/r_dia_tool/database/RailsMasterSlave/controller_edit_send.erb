@@ -1,0 +1,8 @@
+    <%= prepare_comment_above('SEND EDIT') %>    
+    url_params = { 'letter' => get_first_letter(@<%= single %>) }
+    respond_to do |format|
+      edit_html(format,@<%= single %>,url_params)
+      format.json { render json: @<%= single %> }      
+    end
+    <%= prepare_comment_below('SEND EDIT') %>    
+      

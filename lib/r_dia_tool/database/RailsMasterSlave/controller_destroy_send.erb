@@ -1,0 +1,9 @@
+    <%= prepare_comment_above('SEND DESTROY') %>    
+    @<%= single %>.destroy
+    url_params = { :letter => get_first_letter(@<%= single %>) }
+
+    respond_to do |format|
+      format.html { redirect_to <%= plural %>_url(url_params) }
+      format.json { head :no_content }
+    end
+    <%= prepare_comment_below('SEND DESTROY') %>    
