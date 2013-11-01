@@ -1,8 +1,8 @@
     <%= prepare_comment_above('SEND NEW') %>    
     url_params = { 'letter' => params[:letter] }
     respond_to do |format|
-      new_html(format, @<%= single %>,url_params)
-      format.json { render json: @<%= single %> }
+      new_html(format, @<%= template_variables['single'] %>,url_params)
+      format.json { render json: @<%= template_variables['single'] %> }
     end
     <%= prepare_comment_below('SEND NEW') %>    
       

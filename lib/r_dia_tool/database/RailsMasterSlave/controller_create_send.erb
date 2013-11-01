@@ -1,12 +1,12 @@
     <%= prepare_comment_above('SEND CREATE') %>    
 
     respond_to do |format|
-      if @<%= single %>.save
-        format.html { redirect_to <%= single %>_path(@<%= single %>, :letter => get_first_letter(@<%= single %>) ), notice: '<%= cap_single %> was successfully created.' }
-        format.json { render json: @<%= single %>, status: :created, location: @<%= single %> }
+      if @<%= template_variables['single'] %>.save
+        format.html { redirect_to <%= template_variables['single'] %>_path(@<%= template_variables['single'] %>, :letter => get_first_letter(@<%= template_variables['single'] %>) ), notice: '<%= template_variables['cap_single'] %> was successfully created.' }
+        format.json { render json: @<%= template_variables['single'] %>, status: :created, location: @<%= template_variables['single'] %> }
       else
-        new_html(format, @<%= single %>)
-        format.json { render json: @<%= single %>.errors, status: :unprocessable_entity }
+        new_html(format, @<%= template_variables['single'] %>)
+        format.json { render json: @<%= template_variables['single'] %>.errors, status: :unprocessable_entity }
       end
     end
     <%= prepare_comment_below('SEND CREATE') %>    

@@ -1,16 +1,16 @@
 <%
-  single = template_variables['table_name'].downcase.singularize
-  plural = template_variables['table_name'].downcase
-  cap_single = template_variables['table_name'].capitalize.singularize
-  cap_plural = template_variables['table_name'].capitalize
+  template_variables['single'] = template_variables['table_name'].downcase.singularize
+  template_variables['plural'] = template_variables['table_name'].downcase
+  template_variables['cap_single'] = template_variables['table_name'].capitalize.singularize
+  template_variables['cap_plural'] = template_variables['table_name'].capitalize
 %>
 
   def new
-    @<%= single %> = <%= cap_single %>.new
+    @<%= template_variables['single'] %> = <%= template_variables['cap_single'] %>.new
     url_params = { 'letter' => params[:letter] }
     respond_to do |format|
-      new_html(format, @<%= single %>,url_params)
-      format.json { render json: @<%= single %> }
+      new_html(format, @<%= template_variables['single'] %>,url_params)
+      format.json { render json: @<%= template_variables['single'] %> }
     end
   end
 

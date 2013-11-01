@@ -1,8 +1,8 @@
     <%= prepare_comment_above('SEND EDIT') %>    
-    url_params = { 'letter' => get_first_letter(@<%= single %>) }
+    url_params = { 'letter' => get_first_letter(@<%= template_variables['single'] %>) }
     respond_to do |format|
-      edit_html(format,@<%= single %>,url_params)
-      format.json { render json: @<%= single %> }      
+      edit_html(format,@<%= template_variables['single'] %>,url_params)
+      format.json { render json: @<%= template_variables['single'] %> }      
     end
     <%= prepare_comment_below('SEND EDIT') %>    
       

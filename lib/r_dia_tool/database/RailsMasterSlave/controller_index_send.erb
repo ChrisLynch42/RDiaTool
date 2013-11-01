@@ -1,10 +1,10 @@
     <%= prepare_comment_above('SEND INDEX') %>    
 
     url_params = { 'letter' => params[:letter] }
-    @<%= plural %> = <%= cap_single %>.where("upper(title) like upper(:letter)",{:letter => params[:letter].upcase + '%'})
+    @<%= template_variables['plural'] %> = <%= template_variables['cap_single'] %>.where("upper(title) like upper(:letter)",{:letter => params[:letter].upcase + '%'})
     respond_to do |format|
-      render_index_html(format, '<%= cap_plural %>', url_params)
-      format.json { render json: @<%= plural %> }
+      render_index_html(format, '<%= template_variables['cap_plural'] %>', url_params)
+      format.json { render json: @<%= template_variables['plural'] %> }
     end
     <%= prepare_comment_below('SEND INDEX') %>    
 

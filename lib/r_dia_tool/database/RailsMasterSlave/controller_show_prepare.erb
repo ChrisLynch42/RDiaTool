@@ -1,3 +1,3 @@
     <%= prepare_comment_above('PREPARE SHOW') %>    
-    @<%= single %> = <%= cap_single %>.find(params[:id])
+    @<%= template_variables['single'] %> = <%= template_variables['cap_single'] %>.find(params[:id])
     <%= prepare_comment_below('PREPARE SHOW') %>    

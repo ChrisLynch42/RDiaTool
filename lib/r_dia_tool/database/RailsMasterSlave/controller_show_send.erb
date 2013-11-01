@@ -1,9 +1,9 @@
     <%= prepare_comment_above('SEND SHOW') %>    
 
-    url_params = { 'letter' => get_first_letter(@<%= single %>) }
+    url_params = { 'letter' => get_first_letter(@<%= template_variables['single'] %>) }
     respond_to do |format|
-      show_html(format,@<%= single %>,url_params)
-      format.json { render json: @<%= single %> }
+      show_html(format,@<%= template_variables['single'] %>,url_params)
+      format.json { render json: @<%= template_variables['single'] %> }
     end
     <%= prepare_comment_below('SEND SHOW') %>    
 
