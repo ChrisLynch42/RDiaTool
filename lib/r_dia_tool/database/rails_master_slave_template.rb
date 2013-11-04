@@ -1,17 +1,25 @@
 require 'i_basic_template'
+require 'comment_helper'
 
 module RDiaTool
   module Database
 
     class RailsMasterSlaveTemplate
       include IBasicTemplate
+      include CommentHelper
 
-
+        attr_reader :database_difference
 
       def initialize(database_difference,options)
         @controller_directory = options[:rails_dir] + "/app/controllers"
         @view_directory = options[:rails_dir] + "/app/views"
         @base_directory = File.dirname(__FILE__) + "/RailsMasterSlave"
+        @database_difference=database_difference
+      end
+      def generate
+        @database_difference.database.tables_by_name.each do | table_name, table_object |
+          modify_controller(table_name)
+        end
       end
 
       private

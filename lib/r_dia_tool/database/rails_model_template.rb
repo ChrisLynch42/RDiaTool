@@ -22,11 +22,11 @@ module RDiaTool
         if @database_difference.change().nil?
           raise "@database_difference.change() is nil"
         end 
+        analyze_references()
 
       end
 
       def generate
-        analyze_references()
         template_variables = { 'has_many_through' => @has_many_through, 'has_many' => @has_many, 'belongs_to' => @belongs_to, 'database' => @database_difference.database }
         creations = @database_difference.create()
         unless creations.nil? || creations.length <  1

@@ -1,4 +1,5 @@
 require 'active_record'
+require 'rails_master_slave_template'
 require 'rails_model_template'
 require 'rails_model_difference'
 require 'i_database_difference'
@@ -7,11 +8,15 @@ module RDiaTool
   module Database
 
     class TemplateController
-      attr_reader :template, :dia_xml, :template_instance, :database_difference, :target_directory, :options
+      attr_reader :model_template, :view_template, :model_difference, :dia_xml, :template_instance, :database_difference, :target_directory, :options
       attr_accessor :database_configuration
 
       def initialize(dia_xml,options)
-        @template=options[:model] + 'Model'
+        @model_template=options[:model] + 'ModelTemplate'
+        @model_difference=options[:model] + 'ModelDifference'
+        unless options[:template].nil?
+          @view_template=options[:model] + options[:template] + 'Template'
+        end
         @dia_xml=dia_xml
         @options=options
         unless @options.nil? || @options.kind_of?(Hash)
@@ -62,24 +67,31 @@ module RDiaTool
         ActiveRecord::Base.connected?
       end
 
-      def instantiate_template
+      def get_template_object(template_name)
         analyze()
-        class_string = "RDiaTool::Database::"+ template + "Template"
+        class_string = "RDiaTool::Database::"+ template_name
         class_constant = class_string.constantize
-        @template_instance = class_constant.new(@database_difference,options)
-        !@template_instance.nil?
-      end
+        template_object = class_constant.new(@database_difference,options)
+      end      
 
       def execute_template()
-        if instantiate_template()
-          @template_instance.generate()
+        analyze()
+        template_object = get_template_object(@model_template)
+        unless template_object.nil?
+          template_object.generate()
+        end
+        unless @view_template.nil?
+          template_object = get_template_object(@view_template)
+          unless template_object.nil?
+            template_object.generate()
+          end        
         end
       end
 
 
       def analyze
         connect()
-        class_string = "RDiaTool::Database::"+ template + "Difference"
+        class_string = "RDiaTool::Database::"+ @model_difference
         class_constant = class_string.constantize
         @database_difference = class_constant.new(@dia_xml,@options)
         !@database_difference.nil?

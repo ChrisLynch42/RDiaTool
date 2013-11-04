@@ -6,8 +6,12 @@ module RDiaTool
     describe TemplateController do
 
       describe "Class" do
-        it "TemplateController should have attribute 'template' defined" do
-          TemplateController.instance_methods(false).include?(:template).should be_true
+        it "TemplateController should have attribute 'model_template' defined" do
+          TemplateController.instance_methods(false).include?(:model_template).should be_true
+        end
+
+        it "TemplateController should have attribute 'view_template' defined" do
+          TemplateController.instance_methods(false).include?(:view_template).should be_true
         end
 
         it "TemplateController should have attribute 'template_instance' defined" do
@@ -78,8 +82,8 @@ module RDiaTool
             @template_controller.dia_xml.should_not be_nil
           end
 
-          it "template should not be nil" do
-            @template_controller.template.should_not be_nil
+          it "model_template should not be nil" do
+            @template_controller.model_template.should_not be_nil
           end
 
           it "database_difference should not be nil" do
@@ -272,7 +276,7 @@ module RDiaTool
 
             FileUtils.cp_r(Dir.glob(@rails_dir + '/*'),@temp_rails, :remove_destination => true)
             @temp_rails = @temp_rails + '/TestRails'
-            options = {:rails_dir => @temp_rails, :model => 'Rails' }
+            options = {:rails_dir => @temp_rails, :model => 'Rails', :template => 'MasterSlave' }
             @template_controller = RDiaTool::Database::TemplateController.new(dia_xml,options)
           end
 
@@ -280,14 +284,9 @@ module RDiaTool
             #FileUtils.rm_rf(@temp_rails)
           end
 
-          it "it should return true when it receives the 'instantiate_template' message" do
-            @template_controller.instantiate_template().should be_true
+          it "it should return true when it receives the 'get_template_object(RailsModelTemplate)' message" do
+            @template_controller.get_template_object('RailsModelTemplate').should_not be_nil
           end
-
-          it "template_instance should not be nil" do
-            @template_controller.instantiate_template()
-            @template_controller.template_instance.should_not be_nil
-          end          
 
           it "@template_controller should not return nil when 'database_configuration' is called" do
             @template_controller.database_configuration.should_not be_nil
@@ -325,13 +324,23 @@ module RDiaTool
               Dir.glob(@model_dir + "/column.rb").empty?().should be_false
             end
 
-            describe "@template_controller.template_instance" do
+            describe "@template_controller.get_template_object(@template_controller.model_template)" do
+
+              it "should not return nil '@template_controller.get_template_object(@template_controller.model_template)' is called" do
+                 @template_controller.get_template_object(@template_controller.model_template).should_not be_nil
+              end 
+
+               it "should not return nil '@template_controller.get_template_object(@template_controller.model_template).belongs_to' is called" do
+                 template_object = @template_controller.get_template_object(@template_controller.model_template)
+                 template_object.belongs_to.should_not be_nil                 
+              end             
+
               it "should return 2 when 'belongs_to[scenarios_characters].length' is called" do
-                 @template_controller.template_instance.belongs_to['scenarios_characters'].length.should == 2
+                 @template_controller.get_template_object( @template_controller.model_template).belongs_to['scenarios_characters'].length.should == 2
               end
 
               it "should return 9 when 'has_many_through[characters].length' is called" do
-                 @template_controller.template_instance.has_many_through['characters'].length.should == 9
+                 @template_controller.get_template_object(@template_controller.model_template).has_many_through['characters'].length.should == 9
               end              
             end
 
@@ -349,13 +358,14 @@ module RDiaTool
               Dir::mkdir(@temp_rails)
             end
             @migration_dir=@temp_rails + "/TestRails/db/migrate"
+            @controller_dir=@temp_rails + "/TestRails/app/controllers"
             @model_dir=@temp_rails + "/TestRails/app/models"
             @database_dir=base_dir + "/test_database"
 
             FileUtils.cp_r(Dir.glob(@rails_dir + '/*'),@temp_rails, :remove_destination => true)
             @temp_rails = @temp_rails + '/TestRails'
             FileUtils.cp(@database_dir + '/change.sqlite3',@temp_rails + '/db/development.sqlite3')
-            options = {:rails_dir => @temp_rails, :model => 'Rails' }
+            options = {:rails_dir => @temp_rails, :model => 'Rails', :template => 'MasterSlave' }
             @template_controller = RDiaTool::Database::TemplateController.new(dia_xml,options)
             open(@model_dir + "/column.rb", 'a') { |f|
               f.puts "\n###modified"
@@ -383,6 +393,10 @@ module RDiaTool
 
             it "should create '*create_column.rb' file" do
               Dir.glob(@migration_dir + "/*change_column_set.rb").empty?().should be_false
+            end
+
+            it "should create 'skills_controller.rb' file" do
+              Dir.glob(@controller_dir + "/skills_controller.rb").empty?().should be_false
             end
 
             it "should not have the text 'cattle' in the 'column.rb' file" do
