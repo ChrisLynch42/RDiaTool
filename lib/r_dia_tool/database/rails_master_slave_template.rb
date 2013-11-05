@@ -55,18 +55,18 @@ module RDiaTool
           raise "Empty content!"
         end
 
-        template_name_prepare = "controller_#{section.downcase}_prepare.rb"
-        template_name_send = "controller_#{section.downcase}_send.rb"
+        template_name_prepare = "controller_#{section.downcase}_prepare.erb"
+        template_name_send = "controller_#{section.downcase}_send.erb"
         prepare_content = get_template_results(template_name_prepare,template_variables)
         send_content = get_template_results(template_name_send,template_variables)
         unless prepare_content.nil?
-          re = /^\s*### DO NOT EDIT BELOW PREPARE #{section.upcase}.*### DO NOT EDIT BELOW PREPARE #{section.upcase}[ \S]*$/m
+          re = /^\s*#{prepare_comment_above('PREPARE ' + section.upcase)}.*#{prepare_comment_below('PREPARE ' + section.upcase)}[ \S]*$\n/m
           unless content.index(re).nil?
             content.sub!(re,prepare_content)
           end
         end
         unless send_content.nil?
-          re = /^\s*### DO NOT EDIT BELOW SEND #{section.upcase}.*### DO NOT EDIT BELOW SEND #{section.upcase}[ \S]*$/m
+          re = /^\s*#{prepare_comment_above('SEND ' + section.upcase)}.*#{prepare_comment_below('SEND ' + section.upcase)}[ \S]*$\n/m
           unless content.index(re).nil?
             content.sub!(re,send_content)
           end
@@ -78,6 +78,7 @@ module RDiaTool
         Dir.glob(@base_directory + "/#{template_name}").each do | file_name |
           return_value = erb_output(file_name,template_variables)
         end
+        return_value
       end
     end
   end
