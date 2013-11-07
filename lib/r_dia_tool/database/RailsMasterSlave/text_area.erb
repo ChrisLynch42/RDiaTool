@@ -1,0 +1,6 @@
+  <!-- <%= prepare_comment_above(template_variables['column_name'].upcase + ' FIELD') %> -->
+  <div class="field" id="<%= template_variables['column'].name %>Div">
+    <%%= f.label :<%= template_variables['column'].name.downcase %> %><br />
+    <%%= f.text_area :<%= template_variables['column'].name.downcase %>, {:rows=>0, :cols=>0, :class => 'smallDescriptionArea' }%>
+  </div>
+  <!-- <%= prepare_comment_below(template_variables['column_name'].upcase + ' FIELD') %> -->

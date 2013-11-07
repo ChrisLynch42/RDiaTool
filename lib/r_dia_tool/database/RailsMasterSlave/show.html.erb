@@ -1,0 +1,7 @@
+<% template_variables['columns'].each do | column | %>
+<p>
+<b><%= column.name.capitalize  %>:</b>
+  <%%= @<%= template_variables['single'] %>.<%= column.name.downcase %> %>
+</p>
+<% end %> 
+

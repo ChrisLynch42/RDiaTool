@@ -1,0 +1,6 @@
+  <!-- <%= prepare_comment_above(template_variables['column_name'].upcase + ' FIELD') %> -->
+  <div class="field" id="<%= template_variables['column_name'] %>Div">
+    <%%= f.label :<%= template_variables['column_name'].downcase %> %><br />
+    <%%= f.text_field :<%= template_variables['column_name'].downcase %> %>
+  </div>
+  <!-- <%= prepare_comment_below(template_variables['column_name'].upcase + ' FIELD') %> -->

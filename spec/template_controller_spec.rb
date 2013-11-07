@@ -359,6 +359,7 @@ module RDiaTool
             end
             @migration_dir=@temp_rails + "/TestRails/db/migrate"
             @controller_dir=@temp_rails + "/TestRails/app/controllers"
+            @view_dir=@temp_rails + "/TestRails/app/views"
             @model_dir=@temp_rails + "/TestRails/app/models"
             @database_dir=base_dir + "/test_database"
 
@@ -397,6 +398,18 @@ module RDiaTool
 
             it "should create 'skills_controller.rb' file" do
               Dir.glob(@controller_dir + "/skills_controller.rb").empty?().should be_false
+            end
+
+            it "should create 'skills/_form.html.erb' file" do
+              Dir.glob(@view_dir + "/skills/_form.html.erb").empty?().should be_false
+            end
+
+            it "should create 'skills/_show.html.erb' file" do
+              Dir.glob(@view_dir + "/skills/_show.html.erb").empty?().should be_false
+            end
+
+            it "should create 'skills/_index.html.erb' file" do
+              Dir.glob(@view_dir + "/skills/_index.html.erb").empty?().should be_false
             end
 
             it "should not have the text 'cattle' in the 'column.rb' file" do

@@ -1,0 +1,25 @@
+<%% @letters.each do | record | %>
+  <a href="/<%= template_variables['plural'] %>?letter=<%%= record.letter %>" class="ajaxLink"><%%= record.letter %></a> |
+<%% end %>
+
+<table>
+  <tr>
+  <% template_variables['columns'].each do | column | %>
+    <th><%= column.name.capitalize  %></th>
+  <% end %>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<%% @<%= template_variables['plural'] %>.each do |<%= template_variables['single'] %>| %>
+  <tr>
+  <% template_variables['columns'].each do | column | %>
+    <td><%%= <%= template_variables['single'] %>.<%= column.name  %> %></td>
+  <% end %>
+    <td><%%= link_to 'Show', <%= template_variables['single'] %>, :class => 'ajaxLink'  %></td>
+    <td><%%= link_to 'Edit', edit_<%= template_variables['single'] %>_path(<%= template_variables['single'] %>), :class => 'ajaxLink' %></td>
+    <td><%%= link_to 'Destroy', <%= template_variables['single'] %>_path(<%= template_variables['single'] %>), :class => 'ajaxDeleteLink' %></td>
+  </tr>
+<%% end %>
+</table>
