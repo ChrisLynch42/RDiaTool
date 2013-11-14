@@ -360,6 +360,7 @@ module RDiaTool
             @migration_dir=@temp_rails + "/TestRails/db/migrate"
             @controller_dir=@temp_rails + "/TestRails/app/controllers"
             @view_dir=@temp_rails + "/TestRails/app/views"
+            @config_dir=@temp_rails + "/TestRails/config"
             @model_dir=@temp_rails + "/TestRails/app/models"
             @database_dir=base_dir + "/test_database"
 
@@ -410,6 +411,27 @@ module RDiaTool
 
             it "should create 'skills/_index.html.erb' file" do
               Dir.glob(@view_dir + "/skills/_index.html.erb").empty?().should be_false
+            end
+
+            it "should create 'layouts/index.html.erb' file" do
+              Dir.glob(@view_dir + "/layouts/index.html.erb").empty?().should be_false
+            end
+
+            it "should have 'routes.rb' file" do
+              Dir.glob(@config_dir + "/routes.rb").empty?().should be_false
+            end
+
+            it "should contain 'ROUTES' in 'routes.rb' file" do
+              route_file = @config_dir + "/routes.rb"
+              if File.exists?(route_file)
+                file = File.open(route_file,'r')
+                contents=file.read()
+                file.close()
+                contents.should_not be_nil
+                contents.length.should > 0
+                contents.include?('ROUTES').should be_true
+              end              
+              Dir.glob(@config_dir + "/routes.rb").empty?().should be_false
             end
 
             it "should not have the text 'cattle' in the 'column.rb' file" do

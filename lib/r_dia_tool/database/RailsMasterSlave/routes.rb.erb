@@ -1,0 +1,6 @@
+<%= prepare_comment_above('ROUTES') %>    
+
+  <% template_variables['database'].tables_by_name.each do | table_name, table | %>
+    resources :<%= table_name %>
+  <% end %>  
+<%= prepare_comment_below('ROUTES') %>

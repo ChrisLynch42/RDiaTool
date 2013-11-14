@@ -11,6 +11,7 @@ module RDiaTool
         attr_reader :database_difference, :field_templates
 
       def initialize(database_difference,options)
+        @config_directory = options[:rails_dir] + "/config"
         @controller_directory = options[:rails_dir] + "/app/controllers"
         @view_directory = options[:rails_dir] + "/app/views"
         @base_directory = File.dirname(__FILE__) + "/RailsMasterSlave"
@@ -29,9 +30,52 @@ module RDiaTool
           modify_controller(table_name)
           create_views(table_name)
         end
+        create_layouts()
+        create_routes()
       end
 
       private
+
+      def create_routes()
+        template_variables = Hash.new()
+        template_variables['database']=@database_difference.database        
+        routes_section_template_name = "routes.rb.erb"
+        routes_name = "routes.rb"
+        routes_path = @config_directory + "/" + routes_name
+
+        if File.exist?(routes_path)
+          section_content = get_template_results(routes_section_template_name,template_variables)
+          content = load_template(routes_path)
+          unless content.nil? || section_content.nil?
+            re = /^\s*#{prepare_comment_above('ROUTES')}.*#{prepare_comment_below('ROUTES')}[ \S]*$\n/m
+            unless content.index(re).nil?              
+              content.sub!(re,section_content)
+            else
+              re = /^.*\.routes\.draw\s+do\s*\n/
+              unless content.index(re).nil?
+                match = content.match(re)
+                section_content = match.to_s + "\n\n" + section_content
+                content.sub!(re,section_content)
+              end
+            end
+          end
+        else
+          content = erb_output(@base_directory + "/routes_master.rb.erb",template_variables)
+        end
+        if !content.nil? && content.length > 0
+          write_template_results(routes_path,content)        
+        end
+      end
+
+      def create_layouts()
+        template_variables = Hash.new()
+        template_variables['database']=@database_difference.database
+        Dir.glob(@base_directory + "/layouts/*").each do | file_name |
+          FileUtils.cp(file_name,@view_directory + "/layouts", :preserve => true)
+        end
+        content = erb_output(@base_directory + "/application.html.erb",template_variables)
+        write_template_results(@view_directory + "/layouts/application.html.erb",content)        
+      end
 
       def create_views(table_name)
         template_variables = Hash.new()
