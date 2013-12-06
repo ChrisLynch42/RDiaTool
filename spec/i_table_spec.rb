@@ -21,6 +21,9 @@ module RDiaTool
           ITable.instance_methods(false).include?(:references).should be_true
         end
 
+        it "should have method 'type' defined" do
+          ITable.instance_methods(false).include?(:type).should be_true
+        end        
         
       end
 

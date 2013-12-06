@@ -1,4 +1,5 @@
 require 'i_basic_template'
+require 'table_logical_type_enum'
 
 module RDiaTool
   module Database
@@ -82,6 +83,7 @@ module RDiaTool
         database = @database_difference.database
         database.tables_by_name.each do | table_name, table |
           if table.references.length > 1
+            table.type = TableLogicalTypeEnum::LINKING
             build_has_many_through(table)
           else
             build_has_many(table)

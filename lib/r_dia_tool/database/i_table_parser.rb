@@ -2,6 +2,7 @@ require 'nokogiri'
 require 'dia_parser'
 require 'column_parser'
 require 'i_table'
+require 'table_logical_type_enum'
 
 module RDiaTool
   module Database
@@ -12,6 +13,7 @@ module RDiaTool
         self.columns = Hash.new()
         self.columns_in_order = Array.new()
         self.references=Hash.new()
+        self.type = TableLogicalTypeEnum::STANDARD
       end 
 
 

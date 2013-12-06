@@ -26,6 +26,7 @@ require 'rails_master_slave_template'
 require 'i_database_difference'
 require 'rails_model_difference'
 require 'database_change'
+require 'table_logical_type_enum'
 
 
 

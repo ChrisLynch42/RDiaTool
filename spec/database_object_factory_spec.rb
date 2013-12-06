@@ -82,7 +82,14 @@ module RDiaTool
             @database_object.tables_by_id.class.name.should == "Hash"
           end
 
+          it "should not return nil receives the 'tables_by_name[scenarios_characters]' message" do
+            @database_object.tables_by_name['scenarios_characters'].should_not be_nil
+          end
 
+          it "should return TableLogicalTypeEnum::STANDARD when it receives the 'tables_by_name[scenarios_characters].type'" do
+
+            @database_object.tables_by_name['scenarios_characters'].type.should == TableLogicalTypeEnum::STANDARD
+          end
 
           it "references should be a Hash" do
             @database_object.references.class.name.should == "Hash"

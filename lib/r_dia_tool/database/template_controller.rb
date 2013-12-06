@@ -68,7 +68,6 @@ module RDiaTool
       end
 
       def get_template_object(template_name)
-        analyze()
         class_string = "RDiaTool::Database::"+ template_name
         class_constant = class_string.constantize
         template_object = class_constant.new(@database_difference,options)
@@ -80,6 +79,7 @@ module RDiaTool
         unless template_object.nil?
           template_object.generate()
         end
+        
         unless @view_template.nil?
           template_object = get_template_object(@view_template)
           unless template_object.nil?

@@ -285,6 +285,7 @@ module RDiaTool
           end
 
           it "it should return true when it receives the 'get_template_object(RailsModelTemplate)' message" do
+            @template_controller.analyze()
             @template_controller.get_template_object('RailsModelTemplate').should_not be_nil
           end
 
@@ -306,7 +307,10 @@ module RDiaTool
               @template_controller.execute_template()
             end
 
-
+            it "should return TableLogicalTypeEnum::LINKING when it receives the '@template_controller.database_difference.database.tables_by_name[scenarios_characters].type'" do
+              @template_controller.database_difference.database.tables_by_name['scenarios_characters'].type.should == TableLogicalTypeEnum::LINKING
+            end            
+            
             it "should create '*drop_delete_me.rb' file" do
               Dir.glob(@migration_dir + "/*drop_delete_me.rb").empty?().should be_false
             end
