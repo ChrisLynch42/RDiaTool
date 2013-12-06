@@ -1,5 +1,6 @@
 require 'i_basic_template'
 require 'comment_helper'
+require 'table_logical_type_enum'
 
 module RDiaTool
   module Database
@@ -27,8 +28,10 @@ module RDiaTool
 
       def generate
         @database_difference.database.tables_by_name.each do | table_name, table_object |
-          modify_controller(table_name)
-          create_views(table_name)
+          unless table_object.type == TableLogicalTypeEnum::LINKING
+            modify_controller(table_name)
+            create_views(table_name)
+          end
         end
         create_layouts()
         create_routes()

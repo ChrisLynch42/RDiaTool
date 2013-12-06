@@ -271,6 +271,7 @@ module RDiaTool
               Dir::mkdir(@temp_rails)
             end
             @migration_dir=@temp_rails + "/TestRails/db/migrate"
+            @controller_dir=@temp_rails + "/TestRails/app/controllers"
             @model_dir=@temp_rails + "/TestRails/app/models"
             
 
@@ -324,8 +325,16 @@ module RDiaTool
               Dir.glob(@migration_dir + "/*create_column_set.rb").empty?().should be_false
             end 
 
-             it "should create 'column.rb' model file" do
+            it "should create 'column.rb' model file" do
               Dir.glob(@model_dir + "/column.rb").empty?().should be_false
+            end
+
+            it "should not create 'scenarios_characters_controller.rb' model file" do
+              Dir.glob(@controller_dir + "/scenarios_characters_controller.rb").empty?().should be_true
+            end
+
+            it "should create 'scenarios_controller.rb' model file" do
+              Dir.glob(@controller_dir + "/scenarios_controller.rb").empty?().should be_false
             end
 
             describe "@template_controller.get_template_object(@template_controller.model_template)" do
