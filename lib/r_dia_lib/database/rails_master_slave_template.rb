@@ -2,7 +2,7 @@ require 'i_basic_template'
 require 'comment_helper'
 require 'table_logical_type_enum'
 
-module RDiaTool
+module RDiaLib
   module Database
 
     class RailsMasterSlaveTemplate

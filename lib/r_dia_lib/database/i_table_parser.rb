@@ -4,7 +4,7 @@ require 'column_parser'
 require 'i_table'
 require 'table_logical_type_enum'
 
-module RDiaTool
+module RDiaLib
   module Database
     module ITableParser
       include ITable

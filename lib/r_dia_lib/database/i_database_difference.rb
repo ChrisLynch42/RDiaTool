@@ -1,7 +1,7 @@
 require 'database_object_factory'
 require 'database_change'
 
-module RDiaTool
+module RDiaLib
   module Database
 
     module IDatabaseDifference

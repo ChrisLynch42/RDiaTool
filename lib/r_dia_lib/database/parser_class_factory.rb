@@ -7,11 +7,11 @@ require 'i_reference_parser'
 require 'type_enum'
 
 
-module RDiaTool
+module RDiaLib
   module Database
     class ParserClassFactory
-      include RDiaTool::Database::TypeEnum
-      include RDiaTool::Database
+      include RDiaLib::Database::TypeEnum
+      include RDiaLib::Database
 
       attr_accessor :parser_parts, :parser_types
 
@@ -30,7 +30,7 @@ module RDiaTool
       def parser(parser_type)
         return_value=nil
         if !self.parser_types[parser_type].nil?
-          return_value = Class.new( RDiaTool::DiaParser )
+          return_value = Class.new( RDiaLib::DiaParser )
           add_modules(parser_type,return_value)
         end
 

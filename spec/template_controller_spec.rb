@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module RDiaTool
+module RDiaLib
   module Database
 
     describe TemplateController do
@@ -57,7 +57,7 @@ module RDiaTool
             database_file= @temp_database + '/' + file_name
             database_config= { 'adapter' => 'sqlite3', 'database' => database_file}
             options = {:rails_dir => nil, :model => 'Rails' }            
-            @template_controller = RDiaTool::Database::TemplateController.new(dia_xml,options)
+            @template_controller = RDiaLib::Database::TemplateController.new(dia_xml,options)
             @template_controller.database_configuration=database_config
           end
 
@@ -194,7 +194,7 @@ module RDiaTool
             database_file= @temp_database + '/' + file_name
             database_config= { 'adapter' => 'sqlite3', 'database' => database_file}
             options = {:rails_dir => nil, :model => 'Rails' }            
-            @template_controller = RDiaTool::Database::TemplateController.new(dia_xml,options)
+            @template_controller = RDiaLib::Database::TemplateController.new(dia_xml,options)
             @template_controller.database_configuration=database_config
           end
 
@@ -278,7 +278,7 @@ module RDiaTool
             FileUtils.cp_r(Dir.glob(@rails_dir + '/*'),@temp_rails, :remove_destination => true)
             @temp_rails = @temp_rails + '/TestRails'
             options = {:rails_dir => @temp_rails, :model => 'Rails', :template => 'MasterSlave' }
-            @template_controller = RDiaTool::Database::TemplateController.new(dia_xml,options)
+            @template_controller = RDiaLib::Database::TemplateController.new(dia_xml,options)
           end
 
           after(:each) do
@@ -381,7 +381,7 @@ module RDiaTool
             @temp_rails = @temp_rails + '/TestRails'
             FileUtils.cp(@database_dir + '/change.sqlite3',@temp_rails + '/db/development.sqlite3')
             options = {:rails_dir => @temp_rails, :model => 'Rails', :template => 'MasterSlave' }
-            @template_controller = RDiaTool::Database::TemplateController.new(dia_xml,options)
+            @template_controller = RDiaLib::Database::TemplateController.new(dia_xml,options)
             open(@model_dir + "/column.rb", 'a') { |f|
               f.puts "\n###modified"
             }

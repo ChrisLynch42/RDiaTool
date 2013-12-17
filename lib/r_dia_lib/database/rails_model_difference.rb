@@ -1,5 +1,5 @@
 require 'i_database_difference'
-module RDiaTool
+module RDiaLib
   module Database
 
     class RailsModelDifference

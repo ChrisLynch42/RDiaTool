@@ -1,7 +1,7 @@
 require 'nokogiri'
 require 'reference_connection_point'
 
-module RDiaTool
+module RDiaLib
   module Database
     module IReferenceParser
 

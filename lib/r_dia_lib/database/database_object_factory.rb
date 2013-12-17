@@ -1,10 +1,10 @@
 require 'parser_class_factory'
 require 'database_object'
 
-module RDiaTool
+module RDiaLib
   module Database
     class DatabaseObjectFactory 
-      include RDiaTool::Database::TypeEnum
+      include RDiaLib::Database::TypeEnum
       
       attr_reader :dia_xml
  

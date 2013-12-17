@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'nokogiri'
 
-module RDiaTool
+module RDiaLib
   module Database
 
     class TestTableParser < DiaParser

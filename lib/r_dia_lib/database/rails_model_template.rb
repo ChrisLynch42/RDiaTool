@@ -1,7 +1,7 @@
 require 'i_basic_template'
 require 'table_logical_type_enum'
 
-module RDiaTool
+module RDiaLib
   module Database
 
     class RailsModelTemplate

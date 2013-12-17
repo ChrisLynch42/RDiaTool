@@ -1,7 +1,7 @@
 require 'nokogiri'
 require 'erb'
 
-module RDiaTool
+module RDiaLib
   module Database
     module IBasicTemplate
 

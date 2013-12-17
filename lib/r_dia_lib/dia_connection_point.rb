@@ -1,4 +1,4 @@
-module RDiaTool
+module RDiaLib
 
   class DiaConnectionPoint
     attr_accessor :description, :handle, :target_object_id, :connection

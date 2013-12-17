@@ -1,4 +1,4 @@
-module RDiaTool
+module RDiaLib
   module CommentHelper
 
     def prepare_comment_above(title)

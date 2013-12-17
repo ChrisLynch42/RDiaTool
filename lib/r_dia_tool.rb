@@ -3,7 +3,7 @@ require 'rubygems'
 require 'thor'
 require 'template_controller'
 
-class DiaTool < Thor
+class RDiaTool < Thor
   
   TEMPLATES = ['MasterSlave']
 

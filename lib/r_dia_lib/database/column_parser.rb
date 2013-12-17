@@ -2,7 +2,7 @@ require 'nokogiri'
 require 'dia_parser'
 require 'i_column'
 
-module RDiaTool
+module RDiaLib
   module Database
     class ColumnParser < DiaParser
       include IColumn

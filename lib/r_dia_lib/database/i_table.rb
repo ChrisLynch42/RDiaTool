@@ -2,7 +2,7 @@ require 'nokogiri'
 require 'dia_parser'
 require 'column_parser'
 
-module RDiaTool
+module RDiaLib
   module Database
     module ITable
 

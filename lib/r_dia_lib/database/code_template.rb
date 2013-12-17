@@ -1,7 +1,7 @@
 require 'nokogiri'
 require 'i_basic_template'
 
-module RDiaTool
+module RDiaLib
   module Database
     class CodeTemplate
       include IBasicTemplate

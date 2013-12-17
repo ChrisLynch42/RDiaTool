@@ -4,7 +4,7 @@ require 'rails_model_template'
 require 'rails_model_difference'
 require 'i_database_difference'
 
-module RDiaTool
+module RDiaLib
   module Database
 
     class TemplateController
@@ -68,7 +68,7 @@ module RDiaTool
       end
 
       def get_template_object(template_name)
-        class_string = "RDiaTool::Database::"+ template_name
+        class_string = "RDiaLib::Database::"+ template_name
         class_constant = class_string.constantize
         template_object = class_constant.new(@database_difference,options)
       end      
@@ -91,7 +91,7 @@ module RDiaTool
 
       def analyze
         connect()
-        class_string = "RDiaTool::Database::"+ @model_difference
+        class_string = "RDiaLib::Database::"+ @model_difference
         class_constant = class_string.constantize
         @database_difference = class_constant.new(@dia_xml,@options)
         !@database_difference.nil?

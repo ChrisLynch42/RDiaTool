@@ -1,6 +1,6 @@
 require 'dia_connection_point'
 
-module RDiaTool
+module RDiaLib
   module Database
     class ReferenceConnectionPoint < DiaConnectionPoint
       attr_accessor :column_name, :table_name

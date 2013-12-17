@@ -1,7 +1,7 @@
-module RDiaTool
+module RDiaLib
   module Database
     class DatabaseObject
-      include RDiaTool::Database::TypeEnum
+      include RDiaLib::Database::TypeEnum
       
       attr_reader :tables_by_name, :tables_by_id, :references
 

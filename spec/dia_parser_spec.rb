@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'nokogiri'
 
-module RDiaTool
+module RDiaLib
   describe "Dia Parser" do
     the_hash = Hash.new()
     the_node_set = loadTestXML()

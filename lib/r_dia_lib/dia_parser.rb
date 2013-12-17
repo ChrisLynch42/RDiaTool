@@ -1,6 +1,6 @@
 require 'nokogiri'
 
-module RDiaTool
+module RDiaLib
   class DiaParser
 
     attr_accessor :object_id

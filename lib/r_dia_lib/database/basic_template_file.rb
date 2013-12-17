@@ -1,4 +1,4 @@
-module RDiaTool
+module RDiaLib
   module Database
 
     class BasicTemplateFile

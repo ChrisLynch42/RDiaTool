@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module RDiaTool
+module RDiaLib
   module Database
 
     describe RailsModelTemplate do
