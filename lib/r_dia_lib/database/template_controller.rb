@@ -1,3 +1,4 @@
+require 'yaml'
 require 'active_record'
 require 'rails_master_slave_template'
 require 'rails_model_template'

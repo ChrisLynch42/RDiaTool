@@ -53,7 +53,7 @@ class RDiaTool < Thor
         f.close()
       end
       begin
-        template_controller = RDiaTool::Database::TemplateController.new(dia_xml,application_options)
+        template_controller = RDiaLib::Database::TemplateController.new(dia_xml,application_options)
         template_controller.execute_template()
         say 'RDiaTool Rails Model completed successfully.', :green
       rescue => error
