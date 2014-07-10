@@ -28,8 +28,8 @@ module RDiaLib
           config_file = config_file + '/config/database.yml'          
           @database_configuration = YAML.load(File.read(config_file))
         else
-          if @options[:database_configuration]
-            config_file = @options[:database_configuration]
+          if @options[:database_config]
+            config_file = @options[:database_config]
             @database_configuration = YAML.load(File.read(config_file))
           end          
         end
